@@ -107,7 +107,7 @@ A model that says tumors can grow quickly when there is nutrients, space and blo
 It will look like a log function, because the growth will quickly rise and then level out.
 
 
-The formula for this model is: $ \frac{dV}{dt} = c \cdot V \cdot \left(\frac{V}{d_{\text{max}} - V}\right) $
+The formula for this model is: $$\frac{dV}{dt} = c \cdot V \cdot \left(\frac{V}{d_{\text{max}} - V}\right)$$
 
 The graph will look like this:
 ![montrol.png](Img%2Fmontrol.png)

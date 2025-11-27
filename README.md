@@ -19,6 +19,7 @@ Tumours are fundamental to the field of oncology, as they represent uncontrolled
 Tumour cells exhibit altered metabolic demands to sustain their rapid division. They consume increased levels of oxygen and glucose and often shift towards aerobic glycolysis — the Warburg effect — to meet their elevated energetic and biosynthetic requirements (Vaupel et al., 2019). As the tumour mass expands, competition for nutrients and oxygen intensifies, leading to the formation of hypoxic regions. These hypoxic zones drive further changes in tumour physiology, including increased angiogenic signalling, metabolic reprogramming, and enhanced cellular proliferation at the tumour periphery. 
 
 The continuous interaction between nutrient availability, oxygen diffusion, metabolic adaptation, and cell division forms the basis of tumour growth dynamics.
+
 ---
 
 In this package contains different growth models that all have their flaws and plusses. The 

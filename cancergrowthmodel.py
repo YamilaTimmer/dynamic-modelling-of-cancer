@@ -1,3 +1,5 @@
+import math
+
 from matplotlib import pyplot as plt
 
 class CancerGrowthModel:
@@ -37,7 +39,7 @@ class CancerGrowthModel:
         return self.start_size + self.growth_rate * self.start_size
 
     def mendelsohn_model(self):
-        return self.start_size + self.growth_rate * self.start_size ** self.a  # werkt nog niet
+        return self.start_size + self.growth_rate * self.start_size ** self.a
 
     def exponential_flattening_model(self):
         return self.start_size + self.growth_rate * (1.0 - self.start_size / self.max_size)
@@ -46,23 +48,23 @@ class CancerGrowthModel:
         return self.start_size + self.growth_rate * self.start_size * (1.0 - self.start_size / self.max_size)
 
     def montroll_model(self):
-        return
+        return self.start_size + self.growth_rate * self.start_size * (1.0 - self.start_size ** self.a / self.max_size ** self.a)
 
     def allee_model(self):
         return self.start_size + self.growth_rate * self.start_size * (1.0 - self.start_size / self.max_size) * (
                     1.0 - self.min_size / self.start_size)
 
     def linear_limited_model(self):
-        return self.start_size + self.growth_rate * (self.start_size / self.start_size + self.a)  # werkt nog niet
+        return self.start_size + self.growth_rate * (self.start_size / (self.start_size + self.a))
 
     def surface_limited_model(self):
-        return
+        return self.start_size + self.growth_rate * (self.start_size / ((self.start_size + self.a) ** 1/3))
 
     def bertalanffy_model(self):
-        return
+        return self.start_size + self.growth_rate * (1.0 - self.a / (self.start_size ** 2 / 3)) * self.start_size
 
     def gompertz_model(self):
-        return
+        return self.start_size + self.growth_rate * self.start_size * math.log(self.max_size/self.start_size)
 
     def predict(self):
         prediction = [self.start_size]  # add first value

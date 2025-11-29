@@ -90,7 +90,21 @@ class CancerGrowthModel:
         needed_params = model_params_dict[model]
         model_params = {k: params[k] for k in needed_params if k in params}
 
-        if solver == "heun":
+        if solver == "euler":
+            # ODE-solver euler
+            for _ in range(self.t_end):
+                # Bereken de slope
+                slope = ODE(t, y, **model_params)
+                # bereken de verandering van de slope
+                change_y = dt * slope
+
+                # update the results.
+                t = t + dt
+                y = y + change_y
+                ts.append(t)
+                ys.append(y)
+
+        elif solver == "heun":
             # ODE-solver
             for _ in range(self.t_end):
                 # Eerste update
@@ -128,7 +142,6 @@ class CancerGrowthModel:
                 ts.append(t)
                 ys.append(y)
 
-        # als solver euler is
         else:
             return None
 

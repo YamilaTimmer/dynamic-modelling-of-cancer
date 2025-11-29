@@ -12,7 +12,14 @@
 ---
 
 ## Description
+### Key functionality
+
+- Different growth models that can simulate tumor growth
+- ODE solvers
+- MSE
+
 ### relevance
+
 ### Biology
 Tumours are fundamental to the field of oncology, as they represent uncontrolled and dysregulated cell proliferation within tissues. Understanding how a tumour initiates and develops is essential for characterizing its biological behaviour and progression (Egeblad et al., 2010).
 
@@ -21,6 +28,110 @@ Tumour cells exhibit altered metabolic demands to sustain their rapid division. 
 The continuous interaction between nutrient availability, oxygen diffusion, metabolic adaptation, and cell division forms the basis of tumour growth dynamics.
 
 ---
+
+### ODE solvers
+
+**Euler's method**
+
+(freeCodeCamp, 2020)
+The Euler's method is a first-order numerical procedure for solving Ordinary Differential Equations (ODEs) with a given initial value.It is the most elementary explicit method for the numerical integration of ODEs and also the simplest Runge-Kutta method.
+
+The Euler method is a first-order method, which means that the global error is proportional to the step size (h). 
+
+Its purpose is the calculation of an unknown curve that starts at a given point and satisfies a given differential equation. Here, an ODE can be viewed as a formula by which the slope of the tangent line to the curve can be computed at any point on the curve, once the position of that point has been calculated.
+
+*Method formula*
+
+$$y_{n+1} = y_n + h f(t_n, y_n)$$
+
+- $y_𝑛$ - is the y where you are currently at
+- $f(t𝑛, y𝑛)$ - is how steep the slope is on the path
+- $h$ - is the step you take
+- $y_{𝑛 +1}$ - is the new position, it takes the old position plus the distance you traveled (stepsize times the slope)
+
+
+**Heun's method**
+
+(_Heun’s Method Formula, Derivation & Applications With Solved Examples_, z.d.)
+This method is a simple way to find an approximate solution to ODEs when solving exactly is difficult. It is also called a predictor corrector method because it works in two steps.
+
+First, it guesses the answer the predictor, then is improves the guess this is called the corrector. This method finds the value of a function at the next point based on its current value and rate of change. it is known to be more accurate than the Euler's method and other basic methods. Due to its use of an averaged slope, Heun’s method is a **second-order method**, this means its error decreases much faster as the step size (h) gets smaller.
+
+So how does it actually do the calculation? First the method divides the time or interval into equal steps. at each step, it starts by estimating the slope (rate of change) using the current value. Then, it predicts a temporary value at the next step using this estimated slope.
+
+Next, it finds the second slope at this temporary value. Then using both slopes, one from the start and the one from the predicition, it calculates a better estimate for the next point. This proces will continue until the final time or value is reached.
+
+*Method formula*
+
+$$y_{n+1} = y_n + \frac{1}{2} \left[ f(t_n, y_n) + f \left( t_n + h, y_n + h \cdot f(t_n, y_n) \right) \right]$$
+
+- $y_{n+1}$ - is the approximation of the solution at time $t_n + h$
+- $y_n$ - is the approximation of the solution at time $t_n$
+- $h$ - is the step size
+- $f(t_n​,y_n​)$ - predictor slope also known as k1
+- $f(t_n​+h,y_n​+h⋅f(t_n​,y_n​))$ - corrector slope also known as k2
+
+*Note about formula*
+
+$\frac{1}{2}$ is basically $\frac{k1 + k2}{2}$ giving the average of the slopes and calculating the new more accurate $y_{n+1}$ value.
+
+**Runge-Kutta**
+(_Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_, z.d.)
+The Runge-Kutta method is not necessarily one method but a family of numerical methods for approximating the solution of ODEs. The Euler's method is technically part of this family but usually used at the Euler's method and not called Runge-Kutta. But the most widely known Runge-Kutta is the RK4 also known as the classic Runge-Kutta method or Fourth order Runge-Kutta. Here we will use Fourth order method to reference the method.
+
+The fourth order method works by estimating four different slopes (or values of the function's rate of change) at each step. These four slopes then are combined with a smart way to give a better estimate of the next value. This makes the method both accurate and easy to apply. by using just the original function you don't need its higher derivatives.
+
+*Method formula*
+
+$$
+y_{n+1} = y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4)
+$$
+Let's break this down, $k_n$ stands for each point that was calculated. each k has its own formula too. as seen below but for now the focus is on explaining the method forumla. The formula works by taking each k and combining it to a weighted average, where the k2 and k3 weigh twice as much as the k1 and k4 points.
+
+*note for method formula*
+
+The entire term, $\frac{h}{6}$​ times the sum of the k-values, represents the change in y (dy). The $\frac{1}{6}$​ ​ calculates the weighted average slope, and the h converts that slope into the vertical distance traveled.
+
+**The k formulas.**
+
+Each k-value represents an estimate of the slope per function $f(t,y)$ on a specific point within the time of $t_n$ until $t_n +1$. For this explanation lets say we have the following differential equation to solve: $\frac{d_y}{d_t} = f(t,y)$ 
+
+*formula k1*
+For this formula the Euler method can be used to calculate the slope.
+$$k_1 = f(t_n, y_n)$$
+- $f(t𝑛, y𝑛)$ - is how steep the slope is on the path on time n and point y.
+-  $y_𝑛$ - is the y where you are currently at.
+-  $t_𝑛$ - is the current time.
+
+
+*formula k2*
+$$k_2 = f(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1)$$
+-  $y_𝑛$ - is the y where you are currently at.
+-  $t_𝑛$ - is the current time.
+- $t_n +\frac{h}{2}$ - gives the exact halve of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
+- $y_n + \frac{h}{2}k_1$ - gives us the new y value, we use our k1 to predict the new point at the current slope if you look half a step ahead.
+- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the middepoint and gives result k2
+
+*formula k3*
+This formula replicates formula 2, but uses k2 to predict the new point at the current slope.
+$$k_3 = f(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2)$$
+-  $y_𝑛$ - is the y where you are currently at.
+-  $t_𝑛$ - is the current time.
+- $t_n +\frac{h}{2}$ - gives the exact halve of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
+- $y_n + \frac{h}{2}k_2$ - gives us the new y value, we use our k2 to predict the new point at the current slope if you look half a step ahead.
+- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the middepoint and gives result k3
+
+*formula k4*
+$$k_4 = f(t_n + h, y_n + hk_3)$$
+-  $y_𝑛 + hk_3$ - we use the penultimate and most accurate slope we calculated so far ($k_3$) to calculate y at the end of the step. We multiply $k_3$ with the stepsize h and add this to our start value $y_n$ to get our k4 value.
+-  $t_𝑛 + h$ -is the exact time where the current step ends.
+- $f(time~at~the~end, Estimated~y~value~at~the~end)$ gives the result of the estimation of the slope at the end of the step, based on earlier calculations.
+
+
+
+---
+
+### MSE
 
 In this package contains different growth models that all have their flaws and plusses. The 
 package is designed for dynamic modeling of cancer or tumors. 
@@ -72,7 +183,7 @@ Realistically, a tumor can not keep growing indefinitely as there are physical a
 In contrast to the Exponential flattening model, the Mendelsohn growth model believes that growth is umilited (Bindhammer, n.d.) . therefore implying that a tumor cell could replicate and grow bigger forever.
 In reality however, tumor growth does slow down due to the host not being able to provide some of it's crucial growth needs. These being oxygen, nutrients and bloodvessels (providing oxygen and nutrients).
 
-Mendelsohn proposed the formula: $\frac{dV}{dt} = c \cdot V^{d}$ (Gerlee, 2013) c is the tumour growth rate, this gets multiplied by the volume to the power of d (The allometric factor). This gives a plot like in figure 4.
+Mendelsohn proposed the formula: $$\frac{dV}{dt} = c \cdot V^{d}$$ (Gerlee, 2013) c is the tumour growth rate, this gets multiplied by the volume to the power of d (The allometric factor). This gives a plot like in figure 4.
 
 ![mendelsohn.png](Img%2Fmendelsohn.png)
 
@@ -103,7 +214,7 @@ This is the reason the logistic model was introduced. It explains the behaviour 
 in 1883 by Francois verhulst.
 
 The version we will implement is the following:
-$\frac{dV}{dt} = C \cdot V \cdot (V_{max} - V)$
+$$\frac{dV}{dt} = C \cdot V \cdot (V_{max} - V)$$
 
 The max tumour vollume occurs due to the lack of bloodvessels and fight over nutrients (Chan et al., 2023). 
 
@@ -127,7 +238,7 @@ Models in tumor growth often assume exponential growth kinetics at low cell popu
 or recurrence indicate the presence of tumor growth kinetics in which growth rates scale positvely with cell numbers.
 Recent observations however suggest a cooperative growth pattern also known as the allee effect. Here growth rates increase with cell numbers at low densities (Johnson et al., 2019).
 
-The formula for this model is: $\frac{dV}{dt} = C \cdot (V - V_{min})$
+The formula for this model is: $$\frac{dV}{dt} = C \cdot (V - V_{min})$$
 
 This wil result in a graph like in Figure x
 ![alleegrowth.png](Img%2Falleegrowth.png)
@@ -163,3 +274,6 @@ $$\frac{dV}{dt} = c \cdot \frac{V}{(V + d)^{1/3}}$$
 - Grover, N. (1988). Surface-limited growth: A model for the synchronization of a growing bacterial culture through periodic starvation. Journal Of Theoretical Biology, 134(1), 77–87. https://doi.org/10.1016/s0022-5193(88)80303-5
 - Egeblad, M., Nakasone, E. S., & Werb, Z. (2010). Tumors as Organs: Complex Tissues that Interface with the Entire Organism. Developmental Cell, 18(6), 884–901. https://doi.org/10.1016/j.devcel.2010.05.012
 - Vaupel, P., Schmidberger, H., & Mayer, A. (2019). The Warburg effect: essential part of metabolic reprogramming and central contributor to cancer progression. International Journal Of Radiation Biology, 95(7), 912–919. https://doi.org/10.1080/09553002.2019.1589653
+- _Heun’s Method Formula, Derivation & Applications with Solved Examples_. (z.d.). Testbook. https://testbook.com/maths/heuns-method
+- freeCodeCamp. (2020, 26 januari). _Euler's Method Explained with Examples_. freeCodeCamp.org. https://www.freecodecamp.org/news/eulers-method-explained-with-examples/
+- _Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (z.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order

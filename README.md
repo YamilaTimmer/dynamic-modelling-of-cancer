@@ -76,6 +76,7 @@ $$y_{n+1} = y_n + \frac{1}{2} \left[ f(t_n, y_n) + f \left( t_n + h, y_n + h \cd
 $\frac{1}{2}$ is basically $\frac{k1 + k2}{2}$ giving the average of the slopes and calculating the new more accurate $y_{n+1}$ value.
 
 **Runge-Kutta**
+
 (_Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_, z.d.)
 The Runge-Kutta method is not necessarily one method but a family of numerical methods for approximating the solution of ODEs. The Euler's method is technically part of this family but usually used at the Euler's method and not called Runge-Kutta. But the most widely known Runge-Kutta is the RK4 also known as the classic Runge-Kutta method or Fourth order Runge-Kutta. Here we will use Fourth order method to reference the method.
 

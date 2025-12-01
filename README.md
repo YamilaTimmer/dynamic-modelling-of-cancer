@@ -146,7 +146,7 @@ The linear growth model is the simpelest mathematical approach to describing the
 Biologically, this implies that only a fixed number of cells will be created at each timepoint. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrion,
 oxygen and blood vessels. Therefore, this model is not to be seen as accurate. (Brú, A., et al.)
 
-The mathematical description of this model is as follows:  $$V(t) = c \cdot t + V_{0}$$
+**The mathematical formula:**  $$V(t) = c \cdot t + V_{0}$$
 
 Where:
 - c = per day growth rate.
@@ -159,19 +159,38 @@ The resulting slope is a straight line depicting a constant daily increase in tu
 
 *Figure 1: Linear growth model*
 
-**Why use this model?**
+**Model evaluation**
 
 The linear model has some significant limitations concerning biological fidelity, it fails to take account for the volume depedent growth capacity and enviromental limiations.
 However due to its computational simplicity, it serves as a baseline function for numerical model validation and educational purposes in computational oncology.
 
 ### Lineair limited growth model
-This model treat the tumour like 2 fases, when the tumour is grows very slowly and the bigger it gets the more constant  the growth speed gets (turning linear)
-It will look like an exponential growth after which it turns into a more linear growth as to be seen in figure x.
+The linear limited growth model, adresses a key error of the linear model. it does so by introducing a volume-dependence into the growth rate ($c$).
+This model consists of 2 distinct growth phases: an initial phase where the growth is highely dependent on the current volume $V$, folowed by a sustained linear phase when $V$ becomes large. (Brú, 2003)
+
+This also makes this model more biologically plausible because of the gradual onset of enviromental constraints. 
+The growth rate stabilizes at a constant value for larger tumours duo to the increasing nutrient or oxygen limitations.
 
 
-the formula is: $$ \frac{dV}{dt} = c \cdot \frac{V}{V + d} $$
+**The mathematical formula:** 
+
+$$ \frac{dV}{dt} = c \cdot \frac{V}{V + d} $$
+
+Where:
+- V(t) = Tumour volume (in mm3) at time t.
+- $c$ = The growth rate per time unit.
+- $d$ = volume constant that controls the transition rate between non-linear and linear phases.
+
+The resulting slope (see Figure 2) initially shows curvature but then changes towards a linear slope.
 
 ![linearlim.png](Img%2Flinearlim.png)
+
+**Model evalution**
+This model provides a more realistic, volume dependent initial gorwth that is more biologically accurate. 
+However despite this introduction of a transition between states. The model still does not icorporate a carrying capacity.
+Meaning it will go on forever and is not good at modeling the life cycle of tumours that will eventually stabilize due to the enviromental factors.
+
+
 ---
 
 ### Exponential model  
@@ -287,6 +306,7 @@ $$\frac{dV}{dt} = c \cdot \frac{V}{(V + d)^{1/3}}$$
 - Grover, N. (1988). Surface-limited growth: A model for the synchronization of a growing bacterial culture through periodic starvation. Journal Of Theoretical Biology, 134(1), 77–87. https://doi.org/10.1016/s0022-5193(88)80303-5
 - Egeblad, M., Nakasone, E. S., & Werb, Z. (2010). Tumors as Organs: Complex Tissues that Interface with the Entire Organism. Developmental Cell, 18(6), 884–901. https://doi.org/10.1016/j.devcel.2010.05.012
 - Vaupel, P., Schmidberger, H., & Mayer, A. (2019). The Warburg effect: essential part of metabolic reprogramming and central contributor to cancer progression. International Journal Of Radiation Biology, 95(7), 912–919. https://doi.org/10.1080/09553002.2019.1589653
-- _Heun’s Method Formula, Derivation & Applications with Solved Examples_. (z.d.). Testbook. https://testbook.com/maths/heuns-method
+- Heun’s Method Formula, Derivation & Applications with Solved Examples_. (z.d.). Testbook. https://testbook.com/maths/heuns-method
 - freeCodeCamp. (2020, 26 januari). _Euler's Method Explained with Examples_. freeCodeCamp.org. https://www.freecodecamp.org/news/eulers-method-explained-with-examples/
-- _Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (z.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order
+- Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (z.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order
+- Brú, A., Albertos, S., Luis Subiza, J., García-Asenjo, J. L., & Brú, I. (2003). The universal dynamics of tumor growth. Biophysical journal, 85(5), 2948–2961. https://doi.org/10.1016/S0006-3495(03)74715-8

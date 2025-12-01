@@ -205,7 +205,11 @@ Biologically, this model is good at simulating early stage tumor growth, this is
 
 **The mathematical formula:** 
 
-$$V_{\text{t}} = V + c \cdot V$$ , 
+$$V_{\text{t}} = V + c \cdot V$$ 
+
+Where:
+- $V$ = volume of tumor at time t.
+- $c * V$ = growth rate times the Volume at t.
 
 The resulting slope continues to get steeper and higher after each timepoint, this can be seen in figure 3.
   

@@ -55,11 +55,11 @@ $$y_{n+1} = y_n + h f(t_n, y_n)$$
 (_Heun’s Method Formula, Derivation & Applications With Solved Examples_, z.d.)
 This method is a simple way to find an approximate solution to ODEs when solving exactly is difficult. It is also called a predictor corrector method because it works in two steps.
 
-First, it guesses the answer the predictor, then is improves the guess this is called the corrector. This method finds the value of a function at the next point based on its current value and rate of change. it is known to be more accurate than the Euler's method and other basic methods. Due to its use of an averaged slope, Heun’s method is a **second-order method**, this means its error decreases much faster as the step size (h) gets smaller.
+First, it guesses the answer the predictor, then is improving the guess this is called the corrector. This method finds the value of a function at the next point based on its current value and rate of change. it is known to be more accurate than the Euler's method and other basic methods. Due to its use of an averaged slope, Heun’s method is a **second-order method**, this means its error decreases much faster as the step size (h) gets smaller.
 
 So how does it actually do the calculation? First the method divides the time or interval into equal steps. at each step, it starts by estimating the slope (rate of change) using the current value. Then, it predicts a temporary value at the next step using this estimated slope.
 
-Next, it finds the second slope at this temporary value. Then using both slopes, one from the start and the one from the predicition, it calculates a better estimate for the next point. This proces will continue until the final time or value is reached.
+Next, it finds the second slope at this temporary value. Then using both slopes, one from the start and the one from the prediction, it calculates a better estimate for the next point. This proces will continue until the final time or value is reached.
 
 *Method formula*
 
@@ -86,6 +86,7 @@ The fourth order method works by estimating four different slopes (or values of 
 $$
 y_{n+1} = y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4)
 $$
+
 Let's break this down, $k_n$ stands for each point that was calculated. each k has its own formula too. as seen below but for now the focus is on explaining the method forumla. The formula works by taking each k and combining it to a weighted average, where the k2 and k3 weigh twice as much as the k1 and k4 points.
 
 *note for method formula*
@@ -108,18 +109,18 @@ $$k_1 = f(t_n, y_n)$$
 $$k_2 = f(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1)$$
 -  $y_𝑛$ - is the y where you are currently at.
 -  $t_𝑛$ - is the current time.
-- $t_n +\frac{h}{2}$ - gives the exact halve of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
+- $t_n +\frac{h}{2}$ - gives the exact half of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
 - $y_n + \frac{h}{2}k_1$ - gives us the new y value, we use our k1 to predict the new point at the current slope if you look half a step ahead.
-- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the middepoint and gives result k2
+- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the midpoint and gives result k2
 
 *formula k3*
 This formula replicates formula 2, but uses k2 to predict the new point at the current slope.
 $$k_3 = f(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2)$$
 -  $y_𝑛$ - is the y where you are currently at.
 -  $t_𝑛$ - is the current time.
-- $t_n +\frac{h}{2}$ - gives the exact halve of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
+- $t_n +\frac{h}{2}$ - gives the exact half of the total t. We use this to leave the start $t_n$ and use half stepsize instead.
 - $y_n + \frac{h}{2}k_2$ - gives us the new y value, we use our k2 to predict the new point at the current slope if you look half a step ahead.
-- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the middepoint and gives result k3
+- - $f(time~halfway, y~value~halfway)$ - calculates a new, better slope on the midpoint and gives result k3
 
 *formula k4*
 $$k_4 = f(t_n + h, y_n + hk_3)$$
@@ -133,7 +134,7 @@ $$k_4 = f(t_n + h, y_n + hk_3)$$
 
 ### MSE
 
-In this package contains different growth models that all have their flaws and plusses. The 
+In this package contains different growth models that all have their flaws and pluses. The 
 package is designed for dynamic modeling of cancer or tumors. 
 
 
@@ -141,7 +142,7 @@ package is designed for dynamic modeling of cancer or tumors.
 This tumor growth simulation contains various types of ordinary differential equations (or ODE) that can be used to describe tumor growth over time. The models vary in complexity and realism and each have their own use-cases, below we elaborate further on each model.  
 
 ### Linear Growth model
-The linear growth model is the simpelest mathematical approach to describing the tumor volume progression. The Linear models suggest that there will be a stable daily growth, this is independent of the current tumor size.
+The linear growth model is the simplest mathematical approach to describing the tumor volume progression. The Linear models suggest that there will be a stable daily growth, this is independent of the current tumor size.
 
 Biologically, this implies that only a fixed number of cells will be created at each timepoint. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrion,
 oxygen and blood vessels. Therefore, this model is not to be seen as accurate. (Brú, A., et al.)
@@ -161,14 +162,14 @@ The resulting slope is a straight line depicting a constant daily increase in tu
 
 **Model evaluation**
 
-The linear model has some significant limitations concerning biological fidelity, it fails to take account for the volume depedent growth capacity and enviromental limiations.
+The linear model has some significant limitations concerning biological fidelity, it fails to take account for the volume dependent growth capacity and enviromental limiations.
 However due to its computational simplicity, it serves as a baseline function for numerical model validation and educational purposes in computational oncology.
 
-### Lineair limited growth model
-The linear limited growth model, adresses a key error of the linear model. it does so by introducing a volume-dependence into the growth rate ($c$).
-This model consists of 2 distinct growth phases: an initial phase where the growth is highely dependent on the current volume $V$, folowed by a sustained linear phase when $V$ becomes large. (Brú, 2003)
+### Linear limited growth model
+The linear limited growth model, addresses a key error of the linear model. it does so by introducing a volume-dependence into the growth rate ($c$).
+This model consists of 2 distinct growth phases: an initial phase where the growth is highly dependent on the current volume $V$, followed by a sustained linear phase when $V$ becomes large. (Brú, 2003)
 
-This also makes this model more biologically plausible because of the gradual onset of enviromental constraints. 
+This also makes this model more biologically plausible because of the gradual onset of environmental constraints. 
 The growth rate stabilizes at a constant value for larger tumours duo to the increasing nutrient or oxygen limitations.
 
 
@@ -185,16 +186,24 @@ The resulting slope (see Figure 2) initially shows curvature but then changes to
 
 ![linearlim.png](Img%2Flinearlim.png)
 
-**Model evalution**
-This model provides a more realistic, volume dependent initial gorwth that is more biologically accurate. 
-However despite this introduction of a transition between states. The model still does not icorporate a carrying capacity.
-Meaning it will go on forever and is not good at modeling the life cycle of tumours that will eventually stabilize due to the enviromental factors.
+**Model evaluation**
+This model provides a more realistic, volume dependent initial growth that is more biologically accurate. 
+However, despite this introduction of a transition between states. The model still does not incorporate a carrying capacity.
+Meaning it will go on forever and is not good at modeling the life cycle of tumours that will eventually stabilize due to the environmental factors.
 
 
 ---
 
 ### Exponential model  
-Exponential models are similar to linear models, with the difference here being that the volume of the tumor is multiplied with the growth rate, instead of adding them together. This makes for an exponential increase, which can be described with: $$V_{\text{t}} = V + c \cdot V$$ , The resulting plot can be seen in figure 2.
+
+The exponential growth model, is based on the assumption that the rate of cell rapid reproduction is directly proportional to the current number of rapidly reproducing cells.
+These are in turn proportional to the tumor volume V.
+
+Exponential models are similar to linear models,
+with the difference here being that the volume of the tumor is multiplied with the growth rate, 
+instead of adding them together. This makes for an exponential increase, 
+
+which can be described with: $$V_{\text{t}} = V + c \cdot V$$ , The resulting plot can be seen in figure 2.
   
 This model can be used to describe size increase when a tumor is still in the early stages. However, the longer a tumor persists, the more the doubling time increases. This has various underlying factors such as an increase in the average cell-cycle time or loss of cells due to apoptosis [(Gerlee, 2013)](https://doi.org/10.1158/0008-5472.can-12-4355). This model is thus not suited to describe tumor growth over long tem periods.  
 

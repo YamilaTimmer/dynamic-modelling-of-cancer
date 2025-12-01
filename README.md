@@ -141,15 +141,28 @@ package is designed for dynamic modeling of cancer or tumors.
 This tumor growth simulation contains various types of ordinary differential equations (or ODE) that can be used to describe tumor growth over time. The models vary in complexity and realism and each have their own use-cases, below we elaborate further on each model.  
 
 ### Linear Growth model
-Linear models suggest that there will be a stable daily growth, this makes it a simple model to use.
-This model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrion,
-oxygen and bloodvessels. Therefore this model is not to be seen as accurate.
+The linear growth model is the simpelest mathematical approach to describing the tumor volume progression. The Linear models suggest that there will be a stable daily growth, this is independent of the current tumor size.
 
-The mathematical description of this model is as follows:  $V(t) = C \cdot t + V_{0}$ where C = per day growth rate. 
-The graph that will come out of this function is a straight line as seen in figure 1.
+Biologically, this implies that only a fixed number of cells will be created at each timepoint. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrion,
+oxygen and blood vessels. Therefore, this model is not to be seen as accurate. (Brú, A., et al.)
 
+The mathematical description of this model is as follows:  $$V(t) = c \cdot t + V_{0}$$
+
+Where:
+- c = per day growth rate.
+- t = time
+- $V_0$ = initial volume
+
+The resulting slope is a straight line depicting a constant daily increase in tumor mass (sse Figure 1)
+
+![lingrow.png](Img/lingrow.png)
 
 *Figure 1: Linear growth model*
+
+**Why use this model?**
+
+The linear model has some significant limitations concerning biological fidelity, it fails to take account for the volume depedent growth capacity and enviromental limiations.
+However due to its computational simplicity, it serves as a baseline function for numerical model validation and educational purposes in computational oncology.
 
 ### Lineair limited growth model
 This model treat the tumour like 2 fases, when the tumour is grows very slowly and the bigger it gets the more constant  the growth speed gets (turning linear)

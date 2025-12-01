@@ -361,6 +361,8 @@ The max tumour volume occurs due to the lack of blood vessels and fight over nut
 
 ![loggrowth.png](Img%2Floggrowth.png)
 
+_Figure 7: Logistic growth model_
+
 **model evaluation**
 
 
@@ -388,6 +390,13 @@ The graph will look like this:
 
 ![montrol.png](Img%2Fmontrol.png)
 
+_Figure 8: Montroll growth model_
+
+**Model evaluation**
+
+This model allows d to vary, therefore it encompasses the standard logistic and Gompetrz models. Doing this is can accurately model the growth of tumors that don't follow a 
+perfect symmetric or early deceleration pattern. The model is quite complex however and would need some propper research to be understandable and 
+applied correctly.
 
 ---
 ### Allee Effect
@@ -395,13 +404,25 @@ Models in tumor growth often assume exponential growth kinetics at low cell popu
 or recurrence indicate the presence of tumor growth kinetics in which growth rates scale positvely with cell numbers.
 Recent observations however suggest a cooperative growth pattern also known as the allee effect. Here growth rates increase with cell numbers at low densities (Johnson et al., 2019).
 
-The formula for this model is: $$\frac{dV}{dt} = C \cdot (V - V_{min})$$
+**The mathematical formula**
+
+$$\frac{dV}{dt} = c \cdot (V - V_{min}) \cdot (V_{max} - V)$$
+
+Where:
+
+- V = current tumor volume
+- $V_{min}$ = Allee Threshold (the minimum required amount of cells for the tumor to grow)
+- $V_{max}$ = The maximum tumor volume also known as carrying capacity
+- $c$ = growth rate.
 
 This wil result in a graph like in Figure x
 ![alleegrowth.png](Img%2Falleegrowth.png)
 
 **Model evaluation**
 
+This model is highly realistic for the initial growth phases, and
+it's implementation of having a maximum tumour size meaning apoptosis necrosis and environmental have been accounted for. 
+However, $V_{min}$ is difficult to measure clinically so the accuracy and reproducibility might suffer.
 
 ---
 

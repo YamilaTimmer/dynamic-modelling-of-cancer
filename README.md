@@ -187,6 +187,7 @@ The resulting slope (see Figure 2) initially shows curvature but then changes to
 ![linearlim.png](Img%2Flinearlim.png)
 
 **Model evaluation**
+
 This model provides a more realistic, volume dependent initial growth that is more biologically accurate. 
 However, despite this introduction of a transition between states. The model still does not incorporate a carrying capacity.
 Meaning it will go on forever and is not good at modeling the life cycle of tumours that will eventually stabilize due to the environmental factors.
@@ -195,21 +196,31 @@ Meaning it will go on forever and is not good at modeling the life cycle of tumo
 ---
 
 ### Exponential model  
-
+Gerlee, P. (2013). 
 The exponential growth model, is based on the assumption that the rate of cell rapid reproduction is directly proportional to the current number of rapidly reproducing cells.
-These are in turn proportional to the tumor volume V.
+These are in turn proportional to the tumor volume V. It implies that the cell doubling time remains constant over the growth period, and there are no (environmental-) resource limits.
 
-Exponential models are similar to linear models,
-with the difference here being that the volume of the tumor is multiplied with the growth rate, 
-instead of adding them together. This makes for an exponential increase, 
+Biologically, this model is good at simulating early stage tumor growth, this is the fase where a lot of resources like oxygen and nutrients are available. Gerlee, P. (2013). 
 
-which can be described with: $$V_{\text{t}} = V + c \cdot V$$ , The resulting plot can be seen in figure 2.
+**The mathematical formula:** 
+
+$$V_{\text{t}} = V + c \cdot V$$ , 
+
+The resulting slope continues to get steeper and higher after each timepoint, this can be seen in figure 3.
   
-This model can be used to describe size increase when a tumor is still in the early stages. However, the longer a tumor persists, the more the doubling time increases. This has various underlying factors such as an increase in the average cell-cycle time or loss of cells due to apoptosis [(Gerlee, 2013)](https://doi.org/10.1158/0008-5472.can-12-4355). This model is thus not suited to describe tumor growth over long tem periods.  
 
 ![exponentialgrowth.png](Img%2Fexponentialgrowth.png)
 
 *Figure 2: Exponential model*
+
+
+**Model evaluation**
+
+The model like said earlier, is accurate and effective for modeling early stage tumors that have a resource rich environment.
+However, the critical flaw in this model is its assumption of perpetual, unrestricted growth. This is biologically unsustainable. As when a tumor
+matures, the increasing need for nutrients and oxygen's plus their unavailability keeps it from growing. Besides resources, cellular loss (apoptosis)
+and other factors cause effective growth to decline. This makes the exponential model unsuitable for long-term peroids. Gerlee, P. (2013). 
+
 
   ---
 ### Exponential flattening model  

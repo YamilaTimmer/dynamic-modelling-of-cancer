@@ -148,7 +148,9 @@ The linear growth model is the simplest mathematical approach to describing the 
 Biologically, this implies that only a fixed number of cells will be created at each timepoint. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrion,
 oxygen and blood vessels. Therefore, this model is not to be seen as accurate. (Brú, A., et al.)
 
-**The mathematical formula:**  $$V(t) = c \cdot t + V_{0}$$
+**The mathematical formula:**  
+
+$$\frac{dV}{dt} = c \cdot t + V_{0}$$
 
 Where:
 - c = per day growth rate.
@@ -197,7 +199,6 @@ Meaning it will go on forever and is not good at modeling the life cycle of tumo
 ---
 
 ### Exponential model  
-Gerlee, P. (2013). 
 The exponential growth model, is based on the assumption that the rate of cell rapid reproduction is directly proportional to the current number of rapidly reproducing cells.
 These are in turn proportional to the tumor volume V. It implies that the cell doubling time remains constant over the growth period, and there are no (environmental-) resource limits.
 
@@ -205,7 +206,7 @@ Biologically, this model is good at simulating early stage tumor growth, this is
 
 **The mathematical formula:** 
 
-$$V_{\text{t}} = V + c \cdot V$$ 
+$$\frac{dV}{dt} = V + c \cdot V$$ 
 
 Where:
 - $V$ = volume of tumor at time t.
@@ -238,7 +239,7 @@ The exponential flattening model does keep this limitation in mind and the tumor
 **The mathematical formula:** 
 
 
-$$V_{\text{t}} = V + c \cdot V \cdot (1.0 - V/V_{max})$$ 
+$$\frac{dV}{dt} = V + c \cdot V \cdot (1.0 - V/V_{max})$$ 
 
 Where:
 - V = Volume at time t
@@ -295,50 +296,98 @@ This model has been succesfully implemented to predict tumor growth in literatur
 
 **The mathematical formula**
 
-$$Vt = c \cdot V^{\frac{2}{3}} - V_{max} \cdot V$$
+$$\frac{dV}{dt} = c \cdot V^{\frac{2}{3}} - d \cdot V$$
 
 Where:
 - $c$ = growth factor
-- $V^{\frac{2}{3}}$ = the cell death volume
-- 
+- $V^{\frac{2}{3}}$ = represents the surface scaling area
+- $d$ = The braking factor that implements cell death
+
+The slope it creates can be seen in figure 5:
 
 ![bertalanfyy.png](Img%2Fbertalanfyy.png)
+
+_Figure 5: the mertalanffy model._
+
+**Model evaluation**
+
+The model is biologically accurate, because of two reasons: 1 the max cells allowed on a certain surface area and 2 the braking factor
+taking into account apoptosis and necrosis. The 2/3 split might not be accurate for every tumor type however and this is the models downfall.
+
 
 ---  
   
 ### Gompertz model
 The Gompertz model was originally made to predict human mortality curves, but turned out to be a very suitable model to predict cancer growth, as it seems to provide the best predictions for e.g. breast and lung cancer growth [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). This model takes into account growth velocity, or the change of weight/height over time which is useful for monitoring growth [(Zanotti & Faria, 2025)](https://doi.org/10.56238/edimpacto2025.041-005).   
   
+The difference between the Gompertz and Logistic models iks the mechanism of growth reduction. Gompertz assumes that growth rate decreases linearly with the log of the volume.
+This mechanism shows the biological reality that the growth stagnates and decelerates when resources become limited.
+
 **The mathematical formula**
 
-$$V_t = c \cdot V \cdot \ln\Big(\frac{V_{max}}{V}\Big)$$  
+$$\frac{dV}{dt} = c \cdot V \cdot \ln\Big(\frac{V_{max}}{V}\Big)$$  
+
+Where:
+
+- $c$ = the specific growth rate per t 
+- $V_{max}$ = the maximum achievable volume also known as the Carrying Capacity.
+- $ln({\frac{V_{max}}{V}})$ = a natural logarithmic braking factor which drives the growth rate to zero when V approaches $V_{max}$
+
+The slope created can be seen in Figure 6:
 
 ![gompert.png](Img%2Fgompert.png)
 
+_Figure 6: The gompertz model_
+
+**Model evaluation**
+
+Widely used model in oncology  Bindhammer, M. (n.d.) so tried and tested. Also complex and hard to solve mathematically so could be difficult for beginners.
+
 ---
 ###  Logistic Growth 
-The Exponentail Growth model has some limitations in predicting the long term growth rate of cancer cell proliferation (Tabassum et al., 2019).
+The Exponentail growth model has some limitations in predicting the long term growth rate of cancer cell proliferation (Tabassum et al., 2019).
 This is the reason the logistic model was introduced. It explains the behaviour of a later stage cancer cell better. This model was first introduced
-in 1883 by Francois verhulst.
+in 1838 by Pierre Francois Verhulst.
 
-The version we will implement is the following:
-$$\frac{dV}{dt} = C \cdot V \cdot (V_{max} - V)$$
+**The mathematical formula**
 
-The max tumour vollume occurs due to the lack of bloodvessels and fight over nutrients (Chan et al., 2023). 
+$$\frac{dV}{dt} = c \cdot (V_{max} - V)$$
+
+Where:
+- $c$ = Growth rate per t
+- $(V_{max} - V)$ = braking rate that slows the growth of the tumour as it approaches max size
+
+The max tumour volume occurs due to the lack of blood vessels and fight over nutrients (Chan et al., 2023). 
 
 ![loggrowth.png](Img%2Floggrowth.png)
 
+**model evaluation**
+
+
+
 ### Montroll growth model  
 A model that says tumors can grow quickly when there is nutrients, space and bloodvessels but the growth will slow when these resources become scares (Rodrigues, 2024)(Goel et al., 1971).
-It will look like a log function, because the growth will quickly rise and then level out.
+It will look like a log function, because the growth will quickly rise and then level out. 
 
 
-The formula for this model is: $$\frac{dV}{dt} = c \cdot V \cdot \left(\frac{V}{d_{\text{max}} - V}\right)$$
+**the mathematical formula** 
+
+$$\frac{dV}{dt} = c \cdot V \cdot \left({V^d_{\text{max}} - V ^ d}\right)$$
+
+Where:
+- V = Current volume
+- t = time
+- c = growth rate
+- $d$ = The braking factor that implements cell deth
+- $\left({V^d_{\text{max}} - V ^ d}\right)$ = remaining capacity of the growth rate, 
+early stage $V$ is very small meaning high growth rate, later stage V approaches $V_{max}$ the growth rate slows down,
+V =  $V_{max}$ and the growth rate turns to 0 because the maximum stable size was reached.
+
 
 The graph will look like this:
+
 ![montrol.png](Img%2Fmontrol.png)
 
----
 
 ---
 ### Allee Effect
@@ -350,6 +399,9 @@ The formula for this model is: $$\frac{dV}{dt} = C \cdot (V - V_{min})$$
 
 This wil result in a graph like in Figure x
 ![alleegrowth.png](Img%2Falleegrowth.png)
+
+**Model evaluation**
+
 
 ---
 

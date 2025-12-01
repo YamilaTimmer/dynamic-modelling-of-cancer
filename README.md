@@ -229,23 +229,35 @@ and other factors cause effective growth to decline. This makes the exponential 
 
   ---
 ### Exponential flattening model  
-Realistically, a tumor can not keep growing indefinitely as there are physical and physiological limitations. 
-Some of the models described on this page do not keep this limitation in mind, and allow for the tumor to "grow" indefinitely. 
-In an organism there will always be a maximum volume for the tumor, 
+The exponential flattening model takes the assumption that a tumor can not keep growing indefinitely. This is true as there are 
+environmental challenge that arise when a tumor reaches a certain volume. In an organism there will always be a maximum volume for the tumor, 
 which depends on factors such as the tumor's access to resources and to "free" space to grow in [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). 
+The exponential flattening model does keep this limitation in mind and the tumor growth per time unit is described as:
 
-The exponential flattening model does keep this limitation in mind and the tumor growth per time unit is described as:  
 
 **The mathematical formula:** 
 
 
-$$V_{\text{t}} = V + c \cdot V \cdot (1.0 - V/v_{max})$$ 
+$$V_{\text{t}} = V + c \cdot V \cdot (1.0 - V/V_{max})$$ 
 
-Here the increase in volume is determined by how close the tumor is to reaching its maximum volume, the closer it gets to this threshold, the more growth will slow down.
+Where:
+- V = Volume at time t
+- c = the growth rate per t
+- $V_{max}$ = tge maximum stable volume the tumour can become.
+- $(1.0 - \frac{V}{V_max})$ = the braking factor, when the tumour enters its late stage this will result to being 0.
+
+
+In this slope the increase in volume is determined by how close the tumor is to reaching its maximum volume, the closer it gets to this threshold, the more growth will slow down.
 
 ![exponentailflat.png](Img%2Fexponentailflat.png)
 
 *Figure 3: Exponential flattening model*
+
+**Model evaluation**
+
+The model is biologically more accurate than the previous models, it is the first to take the concept of carrying capacity into consideration. 
+It does however assume that the growth rate will be immediately suppressed based on its current volume, it does not take into account for time required for cells to enter apoptosis or necrosis.
+
 
 ---
 ### Mendelsohn Growth 

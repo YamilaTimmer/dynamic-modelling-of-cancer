@@ -261,30 +261,57 @@ It does however assume that the growth rate will be immediately suppressed based
 
 ---
 ### Mendelsohn Growth 
-In contrast to the Exponential flattening model, the Mendelsohn growth model believes that growth is umilited (Bindhammer, n.d.) . therefore implying that a tumor cell could replicate and grow bigger forever.
-In reality however, tumor growth does slow down due to the host not being able to provide some of it's crucial growth needs. These being oxygen, nutrients and bloodvessels (providing oxygen and nutrients).
 
-Mendelsohn proposed the formula: $$\frac{dV}{dt} = c \cdot V^{d}$$ (Gerlee, 2013) c is the tumour growth rate, this gets multiplied by the volume to the power of d (The allometric factor). This gives a plot like in figure 4.
+The Mendelsohn Growth model assumes that growth is unlimited, this is in contrast to the previous Exponenetial flattening model (Bindhammer, n.d.). 
+It implies that a tumor cell could replicate and grow bigger and negates the limits the body has. The biology however tells us this cannot be true, due to the fact of enviromental limitations and size limiations. (Gerlee, 2013) 
+
+
+**The mathematical formula:** 
+
+ $$\frac{dV}{dt} = c \cdot V^{d}$$ 
+ 
+Where:
+
+- c = the tumour growth rate 
+- $V^d$ = Volume to the power of d (The allometric factor). 
+- d = strength of volume limiter.
+
+This generates the slope seen in Figure 4, it looks like an exponential growth slope.
+Note that this might not be accurate as the slope depends on the d - allometric factor.
 
 ![mendelsohn.png](Img%2Fmendelsohn.png)
 
 *Figure 4: Mendelsohn Growth model*
 
+**Model evaluation**
+
+The $d$ allometric factor gives flexibility, and it can be optimized for the different tumor phases. This makes the model better than the standard exponential and linear models.
+The limitations however come to the fact that $d$ will never truly reach 0, therefore there will always be growth even small. 
 ---
 ### Von Bertalanffy Model  
 This ODE takes into account growth in relation to surface area (surface rule model), which states cell growth should be proportional to its surface area [(Chan et al., 2023)](https://doi.org/10.47611/jsrhs.v12i4.5202). The model assumes that the net growth rate does not only consist of tumor cell proliferation but also of tumor cell death [(Botmann & Dobrovolny, 2025)](https://doi.org/10.3389/fams.2025.1542617). In order to apply this, in the equation, volume is powered to 2/3. The bigger the surface area, the higher the amount of nutrients/energy for the cells to absorb and the faster the tumor will grow.   
   
-This model has been succesfully implemented to predict tumor growth in literature, e.g. by [Heesterman et al. (2018)](https://doi.org/10.1055/s-0038-1667148  ) and can be described using:  
-$$Vt = c \cdot V^{2/3} - V_{max} \cdot V$$
+This model has been succesfully implemented to predict tumor growth in literature, e.g. by [Heesterman et al. (2018)](https://doi.org/10.1055/s-0038-1667148  ).
+
+**The mathematical formula**
+
+$$Vt = c \cdot V^{\frac{2}{3}} - V_{max} \cdot V$$
+
+Where:
+- $c$ = growth factor
+- $V^{\frac{2}{3}}$ = the cell death volume
+- 
 
 ![bertalanfyy.png](Img%2Fbertalanfyy.png)
 
 ---  
   
-### Gompertz model  
+### Gompertz model
 The Gompertz model was originally made to predict human mortality curves, but turned out to be a very suitable model to predict cancer growth, as it seems to provide the best predictions for e.g. breast and lung cancer growth [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). This model takes into account growth velocity, or the change of weight/height over time which is useful for monitoring growth [(Zanotti & Faria, 2025)](https://doi.org/10.56238/edimpacto2025.041-005).   
   
-Per time unit, this model is described with: $$V_t = c \cdot V \cdot \ln\Big(\frac{V_{max}}{V}\Big)$$  
+**The mathematical formula**
+
+$$V_t = c \cdot V \cdot \ln\Big(\frac{V_{max}}{V}\Big)$$  
 
 ![gompert.png](Img%2Fgompert.png)
 

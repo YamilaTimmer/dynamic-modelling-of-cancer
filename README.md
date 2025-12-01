@@ -91,7 +91,7 @@ Let's break this down, $k_n$ stands for each point that was calculated. each k h
 
 *note for method formula*
 
-The entire term, $\frac{h}{6}$​ times the sum of the k-values, represents the change in y (dy). The $\frac{1}{6}$​ ​ calculates the weighted average slope, and the h converts that slope into the vertical distance traveled.
+The entire term, $\frac{h}{6}$  the sum of the k-values, represents the change in y (dy). The $\frac{1}{6}$ calculates the weighted average slope, and the converts that slope into the vertical distance traveled.
 
 **The k formulas.**
 

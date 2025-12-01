@@ -229,7 +229,19 @@ and other factors cause effective growth to decline. This makes the exponential 
 
   ---
 ### Exponential flattening model  
-Realistically, a tumor can not keep growing indefinitely as there are physical and physiological limitations. Some of the models described on this page do not keep this limitation in mind, and allow for the tumor to "grow" indefinitely. In an organism there will always be a maximum volume for the tumor, which depends on factors such as the tumor's access to resources and to "free" space to grow in [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). The exponential flattening model does keep this limitation in mind and the tumor growth per time unit is described as:  $$V_{\text{t}} = V + c \cdot V \cdot (1.0 - V/v_{max})$$ Here the increase in volume is determined by how close the tumor is to reaching its maximum volume, the closer it gets to this threshold, the more growth will slow down.
+Realistically, a tumor can not keep growing indefinitely as there are physical and physiological limitations. 
+Some of the models described on this page do not keep this limitation in mind, and allow for the tumor to "grow" indefinitely. 
+In an organism there will always be a maximum volume for the tumor, 
+which depends on factors such as the tumor's access to resources and to "free" space to grow in [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). 
+
+The exponential flattening model does keep this limitation in mind and the tumor growth per time unit is described as:  
+
+**The mathematical formula:** 
+
+
+$$V_{\text{t}} = V + c \cdot V \cdot (1.0 - V/v_{max})$$ 
+
+Here the increase in volume is determined by how close the tumor is to reaching its maximum volume, the closer it gets to this threshold, the more growth will slow down.
 
 ![exponentailflat.png](Img%2Fexponentailflat.png)
 

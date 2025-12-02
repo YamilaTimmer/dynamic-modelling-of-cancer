@@ -380,7 +380,7 @@ Where:
 - V = Current volume
 - t = time
 - c = growth rate
-- $d$ = The braking factor that implements cell deth
+- $d$ = The braking factor that implements cell death
 - $\left({V^d_{\text{max}} - V ^ d}\right)$ = remaining capacity of the growth rate, 
 early stage $V$ is very small meaning high growth rate, later stage V approaches $V_{max}$ the growth rate slows down,
 V =  $V_{max}$ and the growth rate turns to 0 because the maximum stable size was reached.
@@ -415,8 +415,12 @@ Where:
 - $V_{max}$ = The maximum tumor volume also known as carrying capacity
 - $c$ = growth rate.
 
-This wil result in a graph like in Figure x
+This wil result in a graph like in Figure 9
+
 ![alleegrowth.png](Img%2Falleegrowth.png)
+
+_Figure 9: Allee effect model_
+
 
 **Model evaluation**
 
@@ -433,9 +437,30 @@ rather than to its volume. The decrease in dimensionality from volume to surface
 
 The model deals with cell growth under unusual nutritional conditions, and the predicitons on how cell replication cycle is assiumed to behave when there is unusual nutritional conditions (Grover, 1988). 
 
+**The mathematical formula**
+
 $$\frac{dV}{dt} = c \cdot \frac{V}{(V + d)^{1/3}}$$
 
+Where:
+
+- $c$ = growth rate.
+- $V$ = current cell volume.
+- $\frac{V}{(V + d)^{1/3}}$ = the effective cell surface that is available for tumor growth.
+- $d$ = A baseline constant - vragen aan dave
+
+
 ![surfacelim.png](Img%2Fsurfacelim.png)
+
+_Figure 10: Surface limited growth model_
+
+**Model evaluation**
+
+This model favours small cells because of the free surface and the surface getting less full less fast. It takes into account that nutrients need to be distributed
+across the cell surface. The down side is that it assumes that only surface is a limiting factor and in reality there are multiple things that can be a limiting factor.
+
+
+
+
 ---
 
 # Sources  

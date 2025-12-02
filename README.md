@@ -133,10 +133,92 @@ $$k_4 = f(t_n + h, y_n + hk_3)$$
 
 ---
 
-### MSE
+## Optimalisation 
 
-In this package contains different growth models that all have their flaws and pluses. The 
-package is designed for dynamic modeling of cancer or tumors. 
+### Optimalisation criterium 
+
+#### MSE
+Mean squared error measures the amount of error in statistical modes. It assess the average squared difference between the observed and the predicted values. 
+When there is no error , the MSE equals zero meaning the model is perfect (almost impossible). As model errors increase, its value increases.
+
+Mean squared error can also be known as mean squared deviation (MSD)
+
+MSE formula
+
+$$MSE = \frac{\sum (y_i - \hat{y}_i)^2}{n}$$
+ 
+Where:
+- $y_i$ = is the $i^{th}$ observed value
+- $\hat{y_i}$ = is the corresponding predicted value.
+- $n$ = the number of observations.
+
+### Optimalisation methods
+
+
+#### Monte Carlo (Random search)
+
+In place of solving the problem exactly it uses repeated random sampling to solve the problem. Like in a casino (Monte Carlo is famous for casinos hence the name)
+Monte Carlo often gets used for problems that are to complex to solve analytically or problems that are too random. An example of this would be financial markets. (Wikipedia contributors, 2025) (GeeksforGeeks, 2025) 
+
+
+**The logical formula**
+_This is the formula used in our code_
+
+$$New~parameters = Current~Parameter + Gaussian~Random~Sample$$
+
+$$If~MSE(New~Parameters) < MSE(Current~Parameters) ~then ~accept~new~parameters$$
+
+Guassian gives us the randomness within a goodscale for our casino randomness part in changing the old parameters.
+
+There is also a tries variable in play, this is because we want to give the randomness a good chance to find a good fit, but not to keep going forever.
+
+**How does it relate to our models?**
+
+We can use it to efficiently search the parameter space for each ODE growth model. To minimize the MSE between the model's prediction and the observed tumor growth data.
+After using Monte Carlo we are left with the optimal parameter set that provides the best fit for a given data set. (Ibm, 2025), 
+
+
+### Hooke & Jeeves (Direct search)
+
+This model keeps track of the direction of travel moving from point to point, this makes model efficient. The model first tests what way it should
+travel and then saves the best value as $x_1$ (this goes in one dimension only), the second step is using the vector from the old point to the new point, and we search in that direction until improvement stops.
+Once u stop seeing improvement in the direction of the original vector u start step 3, this being repeating the first and second steps. Cast about to find a better point, then travel in that direction.
+
+When the first step returns the original point as the best option, then u move on the next step. Step four is to decrease the incremental interval, if you start with 0.1 then lower this to for example 0.01.
+Repeat all these steps until the interval is small enough to achieve the required tolerance. (Hooke-Jeeves, z.d.)
+
+**The logical formula**
+_This model uses both positive and negative probing_
+
+_Probing step_
+
+**Positive**  $$P_{new~key} = P_{current~key} + P_{delta~current~key}$$
+
+**Negative** $$P_{new~key} = P_{current~key} - P_{delta~current~key}$$
+
+The delta is to note a change, for example delta current key could be: current key * 1.2.
+
+_Step size reduction_
+
+if neither the positive nor the negative step in that dimension results in a lower MSE score, the step size will be reduced to zoom in on the current best point.
+
+$$If~No~Improvement,~then~ delta_{new~key} = 0.2~\cdot~ delta_{current~key}$$
+
+_Termination condition_
+
+To keep the loop from going for ethernity we will say after a certain amount of tries stop.
+
+$$Stop~when~max(|delta_i|) \le 10^{-9}$$
+
+This mean the loop will stop when the rate of chance is smaller or equal to $10^{-9}$.
+
+
+
+
+
+
+
+
 
 
 ## Ordinary Differential Equations (ODE)    
@@ -484,3 +566,7 @@ across the cell surface. The down side is that it assumes that only surface is a
 - freeCodeCamp. (2020, 26 januari). _Euler's Method Explained with Examples_. freeCodeCamp.org. https://www.freecodecamp.org/news/eulers-method-explained-with-examples/
 - Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (z.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order
 - Brú, A., Albertos, S., Luis Subiza, J., García-Asenjo, J. L., & Brú, I. (2003). The universal dynamics of tumor growth. Biophysical journal, 85(5), 2948–2961. https://doi.org/10.1016/S0006-3495(03)74715-8
+- Wikipedia contributors. (2025, 27 oktober). Monte Carlo method. Wikipedia. https://en.wikipedia.org/wiki/Monte_Carlo_method
+- Ibm. (2025, 17 november). Monte Carlo Simulation. IBM. https://www.ibm.com/think/topics/monte-carlo-simulation
+- GeeksforGeeks. (2025, 12 november). Monte Carlo Tree Search (MCTS) in machine learning. GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/monte-carlo-tree-search-mcts-in-machine-learning/
+- Hooke-Jeeves. (z.d.). Minimizing in 3D. https://web.stanford.edu/group/sisl/k12/optimization/MO-unit2-pdfs/2.11minimum3D2hooke-jeeves.pdf

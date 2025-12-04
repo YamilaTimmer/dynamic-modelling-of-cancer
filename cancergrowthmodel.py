@@ -171,42 +171,30 @@ class CancerGrowthModel:
         mse = sum((y_data - y_model) ** 2 for y_data, y_model in zip(self.ys_data, ys_model)) / len(ys_model)
         return mse
 
-    def search(self, params, search, solver, tries=1000):
+    def search(self, params, solver, tries=1000):
         mse = self.MSE(solver=solver, **params)
 
-        if search == "random":
-            count = 0
-            while count < tries:
-                count += 1
-                new_params = {k: v + gauss(0, 0.01) for k, v in params.items()}
-                new_mse = self.MSE(solver = solver, **new_params)
+        deltas = {k: 1.0 for k in params}
+        max_iter, it = tries, 0
+        while max(abs(d) for d in deltas.values()) > 1e-6 and it < max_iter:
+            it += 1
+            for k in params:
+                new_params = params.copy()
+                new_params[k] = params[k] + deltas[k]
+                new_mse = self.MSE(solver=solver, **new_params)
                 if new_mse < mse:
                     params, mse = new_params, new_mse
-                    count = 0
-            return params
+                    deltas[k] *= 1.2
+                    continue
 
-        elif search == "pattern":
-            deltas = {k: 1.0 for k in params}
-            max_iter, it = tries, 0
-            while max(abs(d) for d in deltas.values()) > 1e-6 and it < max_iter:
-                it += 1
-                for k in params:
-                    new_params = params.copy()
-                    new_params[k] = params[k] + deltas[k]
-                    new_mse = self.MSE(solver=solver, **new_params)
-                    if new_mse < mse:
-                        params, mse = new_params, new_mse
-                        deltas[k] *= 1.2
-                        continue
-
-                    new_params[k] = params[k] - deltas[k]
-                    new_mse = self.MSE(solver=solver, **new_params)
-                    if new_mse < mse:
-                        params, mse = new_params, new_mse
-                        deltas[k] *= -1.2
-                        continue
-                    deltas[k] *= 0.2
-            return params
+                new_params[k] = params[k] - deltas[k]
+                new_mse = self.MSE(solver=solver, **new_params)
+                if new_mse < mse:
+                    params, mse = new_params, new_mse
+                    deltas[k] *= -1.2
+                    continue
+                deltas[k] *= 0.2
+        return params
 
     def score(self, mse, params, solver):
         _, ys_model = self.compute_curve(solver = solver, **params)

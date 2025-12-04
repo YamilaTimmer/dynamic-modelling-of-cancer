@@ -1,5 +1,4 @@
 import math
-from random import gauss
 
 class CancerGrowthModel:
     def __init__(self, model, ys_data, ts_data):

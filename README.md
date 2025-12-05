@@ -146,6 +146,8 @@ $$MSE = \frac{\sum (y_i - \hat{y}_i)^2}{n}$$
 - $\hat{y_i}$ = is the corresponding predicted value.  
 - $n$ = the number of observations.  
 
+### Monte carlo (random search)
+
 #### Hooke & Jeeves (direct search)  
 Direct search is the method that was used in this Python class to optimize the predicted parameters in order to fit the ODE onto the provided data. 
 
@@ -174,6 +176,62 @@ To keep the loop from going forever, a stop is implemented after a certain amoun
   
 $$Stop~when~max(|delta_i|) \le 10^{-9}$$ 
 This means the loop will stop when the rate of chance is smaller or equal to $10^{-9}$.  
+
+## Mode comparison
+To see what model is doing the best we can compare scores, there are 3 scores we can generate and compare with one another.
+BIC (Bayesian Information Criterion), AIC (Akaike Information Criterion) and AICc (Akaike Information Criterion corrected).
+These scores correlate strongely with the earlier mention Mean Squared Error  but keep into account the parameter size of the model. 
+So these scores combat overfitting by lowering the score for models with perfect data and too many parameters.
+
+When comparing two models, if the score difference isn't more than 2.0 there is no significant difference in quality.
+If there is a difference that is higher than 2.0 however it can be seen that one model is better then the other,
+this would be the model with the lowest general score.
+
+### Bayesian Information Criterion
+The BIC is a statistical measure that can be used for model selection from a set of models. It is based on the likelihood function
+and it also incorporates a penalty term for the numbers of parameters. Like mentioned before, more parameters could lead to overfitting
+but BIC punishes this with these penalty terms. This helps in identifying the model that will best explain the data while balancing model complexity with a goodness of fit.
+
+**The mathematical formula**
+
+$$BIC = -2ln(L)+k~ln(n)$$
+
+where:
+- $L$ = likelihood of the model given the data
+- $k$ = the number of parameters in the model
+- $n$ = the number of data points
+- $-2ln(L)$ = assesses the models fit on the data
+- $k~ln(n)$ = penalizes the model based on the ammount of parameters
+
+The model with the lowest BIC is the best because it offers the optimal balance between parameters and fititng the data. (GeeksforGeeks, 2025a)
+
+
+### Akaike Information Criterion
+AIC is a common statistical criterion for model selection. the AIC principle states that the model complexity should be penalized
+to avoid overfitting which happens due to the noise in the data rather than the underlying pattern. (GeeksforGeeks, 2025b)
+
+**The mathematical formula**
+
+$$AIC = 2K - 2ln(L)$$
+
+where:
+- $K$ = the number of independent variables used
+- $2ln(L)$ = the loglikelihood estimate (the likelihood that the model could have produced the observed y-values)
+
+If one model is more than 2 AIC units lower than the other, then it would be considered significantly better than that model (Bevans, 2023).
+
+### Akaike Information Criterion corrected
+This score model corrects the previously mentioned AIC model. This is done for smaller sample sized model
+
+**The mathematical formula**
+
+$$AICc = AIC + \frac{2k(k+1}{n-k-1}$$
+
+where:
+- $AIC$ = $2K - 2ln(L)$ - _look at previous formula for explanation_
+- $k$ = the number of independent variables used
+- $n$ = the number of data points
+
 
 ## Ordinary Differential Equations (ODE)      
 This tumor growth simulation contains various types of ordinary differential equations (or ODE) that can be used to describe tumor growth over time. The models vary in complexity and realism, and each have their own use-cases. Below we elaborate further on each model.    
@@ -443,7 +501,9 @@ This model favors small cells because of the free surface and the surface gettin
 across the cell surface. The down side is that it assumes that only surface is a limiting factor and in reality there are multiple things that can be a limiting factor.  
   
 ### Authors    
+
 ---  
+
 - [Yamila Timmer](https://github.com/YamilaTimmer)  
 - [Jarno Duiker](https://github.com/azzipxonraj)   
   
@@ -469,3 +529,6 @@ across the cell surface. The down side is that it assumes that only surface is a
 - Wikipedia contributors. (2025, 27 oktober). Monte Carlo method. Wikipedia. https://en.wikipedia.org/wiki/Monte_Carlo_method  
 - Ibm. (2025, 17 november). Monte Carlo Simulation. IBM. https://www.ibm.com/think/topics/monte-carlo-simulation  
 - GeeksforGeeks. (2025, 12 november). Monte Carlo Tree Search (MCTS) in machine learning. GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/monte-carlo-tree-search-mcts-in-machine-learning/  
+- GeeksforGeeks. (2025a, juli 23). Bayesian Information Criterion (BIC). GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/bayesian-information-criterion-bic/
+- GeeksforGeeks. (2025b, juli 23). How to Calculate AIC in R? GeeksforGeeks. https://www.geeksforgeeks.org/r-language/how-to-calculate-aic-in-r/
+- Bevans, R. (2023, June 22). Akaike information criterion | When & how to use it (example). Scribbr. https://www.scribbr.com/statistics/akaike-information-criterion/

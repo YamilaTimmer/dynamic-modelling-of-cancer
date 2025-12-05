@@ -9,7 +9,7 @@
 	- Evaluation of optimization: [Mean Squared Error (MSE)](https://en.wikipedia.org/wiki/Mean_squared_error)
 	- Model comparison: [Bayes Information Criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC), [Akaike Information Criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC), and the corrected version of AIC: AICc
 
-## Usage
+## Installation & Usage
 ### Requirements
 - Python ([3.13+](https://www.python.org/downloads/))
 - [Matplotlib](https://matplotlib.org/), if the data needs to be plotted
@@ -30,21 +30,18 @@ from cancergrowthmodel import CancerGrowthModel as cgm
 ### Usage
 For extensive examples of how to use this class, please refer to [this notebook](https://github.com/YamilaTimmer/dynamic-modelling-of-cancer/blob/main/SimulatingCancerGrowth.ipynb).
 ## Background information
-The burden cancer places on society has a large impact, due to the disease having a chronic nature and due to the treatments causing many side effects. In order to improve the efficacy of treatments and develop new ones, mathematical models (or ODE's) are being used. These help predict the tumor growth as time goes on (([Murphy et al., 2016](https://doi.org/10.1186/s12885-016-2164-x))). This Python tool is an example of a such tumor growth predictor and below we will elaborate on the ODE's and other variables used.
+The burden cancer places on society has a large impact, due to the disease having a chronic nature and due to the treatments causing many side effects. In order to improve the efficacy of treatments and develop new ones, mathematical models (or ODE's) are being used. These help predict the tumor growth as time goes on ([Murphy et al., 2016](https://doi.org/10.1186/s12885-016-2164-x)). This Python tool is an example of such a tumor growth predictor, and below we will elaborate on the ODE's and other variables used.
 
 ### ODE solvers  
   
 **Euler's method**  
   
-(freeCodeCamp, 2020)  
-Euler's method is a first-order numerical procedure for solving Ordinary Differential Equations (ODEs) with a given initial value. It is the most elementary explicit method for the numerical integration of ODEs and also the simplest Runge-Kutta method.  
-  
+Euler's method is a first-order numerical procedure for solving Ordinary Differential Equations (ODEs) with a given initial value. It is the most elementary explicit method for the numerical integration of ODEs and also the simplest Runge-Kutta method ([freeCodeCamp, 2020](https://www.freecodecamp.org/news/eulers-method-explained-with-examples/)).  
+
 Euler's method is a first-order method, which means that the global error is proportional to the step size (h). Its purpose is the calculation of an unknown curve that starts at a given point and satisfies a given differential equation. Here, an ODE can be viewed as a formula by which the slope of the tangent line to the curve can be computed at any point on the curve, once the position of that point has been calculated.
   
-*Method formula*  
-  
+*Method formula*
 $$y_{n+1} = y_n + h f(t_n, y_n)$$  
-  
 - $y_𝑛$ - is the y where you are currently at  
 - $f(t𝑛, y𝑛)$ - is how steep the slope is on the path  
 - $h$ - is the step you take  
@@ -52,9 +49,9 @@ $$y_{n+1} = y_n + h f(t_n, y_n)$$
   
   
 **Heun's method**  
-  
-(_Heun’s Method Formula, Derivation & Applications With Solved Examples_, z.d.)  
-This method is a simple way to find an approximate solution to ODEs when solving exactly is difficult. It is also called a predictor-corrector method because it works in two steps.  
+
+This method is a simple way to find an approximate solution to ODEs when solving exactly is difficult. It is also called a predictor-corrector method because it works in two steps
+([Heun’s Method Formula, Derivation & Applications With Solved Examples, n.d.](https://testbook.com/maths/heuns-method)).  
   
 First, it guesses the answer (the predictor), then improves the guess, which is called the corrector. This method finds the value of a function at the next point based on its current value and rate of change. It is known to be more accurate than Euler's method and other basic methods. Due to its use of an averaged slope, Heun’s method is a **second-order method**, which means its error decreases much faster as the step size (h) gets smaller.  
   
@@ -78,10 +75,9 @@ $\frac{1}{2}$ is basically $\frac{k1 + k2}{2}$, giving the average of the slopes
   
 **Runge-Kutta**  
   
-(_Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_, z.d.)  
 The Runge-Kutta method is not necessarily one method but a family of numerical methods for approximating the solution of ODEs. Euler's method is technically part of this family but is better known by its own name. But the most widely known Runge-Kutta is RK4, also known as the classic Runge-Kutta method or fourth order Runge-Kutta. Here we will use the fourth order method to reference the method.  
   
-The fourth order method works by estimating four different slopes (or values of the function's rate of change) at each step. These four slopes are then combined in a smart way to give a better estimate of the next value. This makes the method both accurate and easy to apply. By using just the original function, you don't need its higher derivatives.  
+The fourth order method works by estimating four different slopes (or values of the function's rate of change) at each step. These four slopes are then combined in a smart way to give a better estimate of the next value. This makes the method both accurate and easy to apply. By using just the original function, you don't need its higher derivatives ([Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example, n.d.](https://testbook.com/maths/runge-kutta-4th-order)).  
   
 *Method formula*  
   
@@ -89,7 +85,7 @@ $$
 y_{n+1} = y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4)  
 $$  
   
-Let's break this down, $k_n$ stands for each point that was calculated. Each k has its own formula too, as seen below, but for now the focus is on explaining the method formula. The formula works by taking each k and combining it to a weighted average, where the k2 and k3 weigh twice as much as the k1 and k4 points.  
+Let's break this down, $k_n$ stands for each point that was calculated. Each k has its own formula too, as seen below, but for now, the focus is on explaining the method formula. The formula works by taking each k and combining it into a weighted average, where the k2 and k3 weigh twice as much as the k1 and k4 points.  
   
 Note for method formula:
 - The entire term, $\frac{h}{6}$  the sum of the k-values, represents the change in y (dy). The $\frac{1}{6}$ calculates the weighted average slope, and then converts that slope into the vertical distance traveled.  
@@ -135,7 +131,7 @@ $$k_4 = f(t_n + h, y_n + hk_3)$$
   
 ## Optimization   
 
-#### Mean Squared Error (MSE)
+### Mean Squared Error (MSE)
 MSE is used as an optimization criterion, where it measures the amount of 'error'. It assesses the average squared difference between the observed and the predicted values. When there is no error, the MSE equals zero, meaning the model is perfect (almost impossible). As model errors increase, its value increases.  
 
 MSE formula:
@@ -146,51 +142,19 @@ $$MSE = \frac{\sum (y_i - \hat{y}_i)^2}{n}$$
 - $\hat{y_i}$ = is the corresponding predicted value.  
 - $n$ = the number of observations.  
 
-### Monte carlo (random search)
-Monte carlo method is understanding mathematical systems by using randomly generated numbers (reason why it is named after monte carlo because it's famous for their casinos) 
-as an input into said system, to generate a range of solutions.
-The likelihood of the particular solution can be found by dividing the number of times that solution was generated by the total number of trails.(Wikipedia contributors, 2025b) (Monte Carlo method, 2022) (Basics Of The Monte Carlo Method - Computational Physics, z.d.)
-
-The usual steps are:
-1. define a domain of possible inputs.
-2. Generate inputs randomly (This program used Guassian randomselect) over the domain.
-3. Perform a deterministic computation of the outputs
-4. Aggregate the result.
-
-**The mathematical formula (acording to our code)**
-
-$$p' = p^{t-1} + ϵ$$
-
-Where:
-- $ϵ$ = random step vector (noise)
-- $p^{t-1}$ = Parameter vector from previous time step
-
-For deciding the new candidate parameter vector
-
-$$J(p) = min(J(p'P, J^{(t-1}) )$$
-
-Where:
-- $J^{(t-1)}$ = Last MSE value
-- $min()$ = chooses the lowest val from the values between the "()"
-- $J(p')$ = New MSE calculated using the randomely change new parameter set p'
-
-
-
-
-
-#### Hooke & Jeeves (direct search)  
+### Hooke & Jeeves (direct search)  
 Direct search is the method that was used in this Python class to optimize the predicted parameters in order to fit the ODE onto the provided data. 
 
-This model keeps track of the direction of travel moving from point to point, which makes the model efficient. The model first tests what way it should travel and then saves the best value as $x_1$ (this goes in one dimension only). The second step is using the vector from the old point to the new point, and we search in that direction until improvement stops. Once the parameters stop improving further in one direction, step 3 is initiated. Which repeats the first and second step. Cast about to find a better point, then travel in that direction. When the first step returns the original point as the best option, it moves on to the next step. Step four is to decrease the incremental interval, if you start with 0.1 then lower this to for example 0.01. Repeat all these steps until the interval is small enough to achieve the required tolerance ([Stanford University, z.d.](https://web.stanford.edu/group/sisl/k12/optimization/MO-unit2-pdfs/2.11minimum3D2hooke-jeeves.pdf)). 
+This model keeps track of the direction of travel moving from point to point, which makes the model efficient. The model first tests what way it should travel and then saves the best value as $x_1$ (this goes in one dimension only). The second step is using the vector from the old point to the new point, and we search in that direction until improvement stops. Once the parameters stop improving further in one direction, step 3 is initiated. Which repeats the first and second steps. Cast about to find a better point, then travel in that direction. When the first step returns the original point as the best option, it moves on to the next step. Step four is to decrease the incremental interval, if you start with 0.1 then lower this to for example 0.01. Repeat all these steps until the interval is small enough to achieve the required tolerance ([Stanford University, n.d.](https://web.stanford.edu/group/sisl/k12/optimization/MO-unit2-pdfs/2.11minimum3D2hooke-jeeves.pdf)). 
   
-**The logical formula**  
-_This model uses both positive and negative probing_  
+**The logical formula**: 
+- This model uses both positive and negative probing
   
 _Probing step_  
   
-**Positive**  $$P_{new~key} = P_{current~key} + P_{delta~current~key}$$  
+Positive  $$P_{new~key} = P_{current~key} + P_{delta~current~key}$$  
   
-**Negative** $$P_{new~key} = P_{current~key} - P_{delta~current~key}$$  
+Negative $$P_{new~key} = P_{current~key} - P_{delta~current~key}$$  
   
 The delta is to note a change, for example delta current key could be: current key * 1.2.  
   
@@ -202,62 +166,53 @@ $$If~No~Improvement,~then~ delta_{new~key} = 0.2~\cdot~ delta_{current~key}$$
   
 _Termination condition_  
   
-To keep the loop from going forever, a stop is implemented after a certain amount of tries.  
+To keep the loop from going forever, a stop is implemented after a certain number of tries.  
   
 $$Stop~when~max(|delta_i|) \le 10^{-9}$$ 
 This means the loop will stop when the rate of chance is smaller or equal to $10^{-9}$.  
 
-## Mode comparison
-To see what model is doing the best we can compare scores, there are 3 scores we can generate and compare with one another.
-BIC (Bayesian Information Criterion), AIC (Akaike Information Criterion) and AICc (Akaike Information Criterion corrected).
-These scores correlate strongely with the earlier mention Mean Squared Error  but keep into account the parameter size of the model. 
-So these scores combat overfitting by lowering the score for models with perfect data and too many parameters.
+## Model comparison
+To see which model is performing the best on the input data, scores can be compared.  There are 3 scores we can generate and compare with one another: **BIC** (Bayesian Information Criterion), **AIC** (Akaike Information Criterion), and **AICc** (Akaike Information Criterion corrected).
+These scores correlate strongly with the earlier mentioned mean squared error but take into account the number of parameters included in the model. So these scores combat overfitting by lowering the score for models with a lot of parameters. When comparing two models, if the score difference isn't lower than 2.0, there is no significant difference in quality. If the difference is higher than 2.0, however, it can be seen that one model is better than the other.
 
-When comparing two models, if the score difference isn't more than 2.0 there is no significant difference in quality.
-If there is a difference that is higher than 2.0 however it can be seen that one model is better then the other,
-this would be the model with the lowest general score.
-
-### Bayesian Information Criterion
-The BIC is a statistical measure that can be used for model selection from a set of models. It is based on the likelihood function
-and it also incorporates a penalty term for the numbers of parameters. Like mentioned before, more parameters could lead to overfitting
-but BIC punishes this with these penalty terms. This helps in identifying the model that will best explain the data while balancing model complexity with a goodness of fit.
+### Bayesian Information Criterion (BIC)
+The BIC is a statistical measure that can be used for model selection from a set of models. It is based on the likelihood function, and it also incorporates a penalty term for the numbers of parameters. As mentioned before, more parameters could lead to overfitting, but BIC punishes this with these penalty terms. This helps in identifying the model that will best explain the data while balancing model complexity with a goodness of fit.
 
 **The mathematical formula**
 
 $$BIC = -2ln(L)+k~ln(n)$$
 
-where:
+Where:
 - $L$ = likelihood of the model given the data
 - $k$ = the number of parameters in the model
 - $n$ = the number of data points
 - $-2ln(L)$ = assesses the models fit on the data
-- $k~ln(n)$ = penalizes the model based on the ammount of parameters
+- $k~ln(n)$ = penalizes the model based on the amount of parameters
 
-The model with the lowest BIC is the best because it offers the optimal balance between parameters and fititng the data. (GeeksforGeeks, 2025a)
+The model with the lowest BIC is the best because it offers the optimal balance between parameters and fititng the data ([GeeksforGeeks, 2025a](https://www.geeksforgeeks.org/machine-learning/bayesian-information-criterion-bic/)).
 
 
-### Akaike Information Criterion
-AIC is a common statistical criterion for model selection. the AIC principle states that the model complexity should be penalized
-to avoid overfitting which happens due to the noise in the data rather than the underlying pattern. (GeeksforGeeks, 2025b)
+### Akaike Information Criterion (AIC)
+AIC is a common statistical criterion for model comparison, it states that the model complexity should be penalized to avoid overfitting, which happens due to the noise in the data rather than the underlying pattern ([GeeksforGeeks, 2025b](https://www.geeksforgeeks.org/r-language/how-to-calculate-aic-in-r/)).
 
 **The mathematical formula**
 
 $$AIC = 2K - 2ln(L)$$
 
-where:
+Where:
 - $K$ = the number of independent variables used
 - $2ln(L)$ = the loglikelihood estimate (the likelihood that the model could have produced the observed y-values)
 
-If one model is more than 2 AIC units lower than the other, then it would be considered significantly better than that model (Bevans, 2023).
+If one model is more than 2 AIC units lower than the other, then it would be considered significantly better than that model ([Bevans, 2023](https://www.scribbr.com/statistics/akaike-information-criterion/)).
 
-### Akaike Information Criterion corrected
-This score model corrects the previously mentioned AIC model. This is done for smaller sample sized model
+### Akaike Information Criterion corrected (AICc)
+This score model corrects the previously mentioned AIC model. This is done for smaller sample sized model.
 
 **The mathematical formula**
 
 $$AICc = AIC + \frac{2k(k+1}{n-k-1}$$
 
-where:
+Where:
 - $AIC$ = $2K - 2ln(L)$ - _look at previous formula for explanation_
 - $k$ = the number of independent variables used
 - $n$ = the number of data points
@@ -269,7 +224,7 @@ This tumor growth simulation contains various types of ordinary differential equ
 ### Linear Growth model  
 The linear growth model is the simplest mathematical approach to describing the tumor volume progression. The Linear models suggest that there will be a stable daily growth, which is independent of the current tumor size.  
   
-Biologically, this implies that only a fixed number of cells will be created at each time point. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they only are limited by nutrition, oxygen, and blood vessels. Therefore, this model is not to be seen as accurate. (Brú, A., et al.)  
+Biologically, this implies that only a fixed number of cells will be created at each time point. This brings up that the linear model has a great flaw, as tumor cells start growing more when the larger they become, they are only limited by nutrition, oxygen, and blood vessels. Therefore, this model is not to be seen as accurate ([Brú et al., 2003](https://doi.org/10.1016/S0006-3495(03)74715-8)).
   
 **The mathematical formula:**    
 $$\frac{dV}{dt} = c \cdot t + V_{0}$$  
@@ -279,7 +234,7 @@ Where:
 - $t$ = time  
 - $V_0$ = initial volume  
   
-The resulting slope is a straight line depicting a constant daily increase in tumor mass (sse Figure 1)  
+The resulting slope is a straight line depicting a constant daily increase in tumor mass (see Figure 1)  
   
 ![lingrow.png](Img/lingrow.png)  
   
@@ -289,7 +244,7 @@ The resulting slope is a straight line depicting a constant daily increase in tu
 The linear model has some significant limitations concerning biological fidelity, it fails to take into account the volume-dependent growth capacity and environmental limitations. However, due to its computational simplicity, it serves as a baseline function for numerical model validation and educational purposes in computational oncology.  
   
 ### Linear limited growth model  
-The linear limited growth model addresses a key error of the linear model. It does so by introducing a volume-dependence into the growth rate ($c$). This model consists of 2 distinct growth phases: an initial phase where the growth is highly dependent on the current volume $V$, followed by a sustained linear phase when $V$ becomes large. (Brú, 2003)  
+The linear limited growth model addresses a key error of the linear model. It does so by introducing a volume-dependence into the growth rate ($c$). This model consists of 2 distinct growth phases: an initial phase where the growth is highly dependent on the current volume $V$, followed by a sustained linear phase when $V$ becomes large ([Brú et al., 2003](https://doi.org/10.1016/S0006-3495(03)74715-8)).
   
 This also makes this model more biologically plausible because of the gradual onset of environmental constraints. The growth rate stabilizes at a constant value for larger tumors due to the increasing nutrient or oxygen limitations.  
   
@@ -312,7 +267,7 @@ This model provides a more realistic, volume-dependent initial growth that is mo
 ---  
   
 ### Exponential model    
-The exponential growth model is based on the assumption that the rate of cell rapid reproduction is directly proportional to the current number of rapidly reproducing cells. These are in turn proportional to the tumor volume V. It implies that the cell doubling time remains constant over the growth period, and there are no (environmental-) resource limits. Biologically, this model is good at simulating early-stage tumor growth, which is the phase where a lot of resources like oxygen and nutrients are available. Gerlee, P. (2013).   
+The exponential growth model is based on the assumption that the rate of cell rapid reproduction is directly proportional to the current number of rapidly reproducing cells. These are in turn proportional to the tumor volume V. It implies that the cell doubling time remains constant over the growth period, and there are no (environmental-) resource limits. Biologically, this model is good at simulating early-stage tumor growth, which is the phase where a lot of resources like oxygen and nutrients are available ([Gerlee, 2013](https://doi.org/10.1158/0008-5472.can-12-4355)).   
   
 **The mathematical formula:**   
 $$\frac{dV}{dt} = V + c \cdot V$$   
@@ -330,7 +285,7 @@ The resulting slope continues to get steeper and higher after each time point, t
   
 **Model evaluation**  
   
-The model, like said earlier, is accurate and effective for modeling early-stage tumors that have a resource-rich environment.  However, the critical flaw in this model is its assumption of perpetual, unrestricted growth. This is biologically unsustainable. As when a tumor matures, the increasing need for nutrients and oxygen plus their unavailability, keeps it from growing. Besides resources, cellular loss (apoptosis) and other factors cause effective growth to decline. This makes the exponential model unsuitable for long-term periods. Gerlee, P. (2013).   
+The model, like said earlier, is accurate and effective for modeling early-stage tumors that have a resource-rich environment.  However, the critical flaw in this model is its assumption of perpetual, unrestricted growth. This is biologically unsustainable. As when a tumor matures, the increasing need for nutrients and oxygen plus their unavailability, keeps it from growing. Besides resources, cellular loss (apoptosis) and other factors cause effective growth to decline. This makes the exponential model unsuitable for long-term periods ([Gerlee, 2013](https://doi.org/10.1158/0008-5472.can-12-4355 )).
   
 ### Exponential flattening model    
 The exponential flattening model takes the assumption that a tumor can not keep growing indefinitely. This is true as there are environmental challenges that arise when a tumor reaches a certain volume. In an organism, there will always be a maximum volume for the tumor, which depends on factors such as the tumor's access to resources and to "free" space to grow in [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). The exponential flattening model does keep this limitation in mind, and the tumor growth per time unit is described as:  
@@ -357,12 +312,11 @@ The model is biologically more accurate than the previous models, it is the firs
 ---  
 ### Mendelsohn Growth   
   
-The Mendelsohn Growth model assumes that growth is unlimited, this is in contrast to the previous exponential flattening model (Bindhammer, n.d.). It implies that a tumor cell could replicate and grow bigger, and negates the limits the body has. The biology however, tells us this cannot be true, due to the fact of environmental limitations and size limitations. (Gerlee, 2013)   
+The Mendelsohn Growth model assumes that growth is unlimited, this is in contrast to the previous exponential flattening model ([Bindhammer, 2016](https://cdn.hackaday.io/files/8586367343424/From%20the%20Mendelsohn%20model%20to%20the%20Gompertz%20and%20logistic%20growth%20law.pdf)). It implies that a tumor cell could replicate and grow bigger, and negates the limits the body has. The biology however, tells us this cannot be true, due to the fact of environmental limitations and size limitations ([Gerlee, 2013](https://doi.org/10.1158/0008-5472.can-12-4355 )).  
   
   
 **The mathematical formula:**   
- $$\frac{dV}{dt} = c \cdot V^{d}$$   
-   
+ $$\frac{dV}{dt} = c \cdot V^{d}$$
 Where:  
   
 - $c$ = the tumor growth rate   
@@ -378,8 +332,7 @@ Note that this might not be accurate as the slope depends on the d - allometric 
   
 **Model evaluation**  
   
-The $d$ allometric factor gives flexibility, and it can be optimized for the different tumor phases. This makes the model better than the standard exponential and linear models.
-The limitations, however come to the fact that $d$ will never truly reach 0, therefore there will always be growth.   
+The $d$ allometric factor gives flexibility, and it can be optimized for the different tumor phases. This makes the model better than the standard exponential and linear models. The limitations, however, come to the fact that $d$ will never truly reach 0, therefore there will always be growth.   
 
 --- 
 ### Von Bertalanffy Model    
@@ -399,19 +352,17 @@ The slope it creates can be seen in figure 5:
   
 ![bertalanfyy.png](Img%2Fbertalanfyy.png)  
   
-_Figure 5: the mertalanffy model._  
+_Figure 5: the Bertalanffy model._  
   
 **Model evaluation**  
   
 The model is biologically accurate, because of two reasons: 1 the max cells allowed on a certain surface area and 2 the braking factor taking into account apoptosis and necrosis. The 2/3 split might not be accurate for every tumor type, however and this is the model's downfall.  
   
 ---    
-    
 ### Gompertz model  
-The Gompertz model was originally made to predict human mortality curves, but turned out to be a very suitable model to predict cancer growth, as it seems to provide the best predictions for e.g. breast and lung cancer growth [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). This model takes into account growth velocity, or the change of weight/height over time which is useful for monitoring growth [(Zanotti & Faria, 2025)](https://doi.org/10.56238/edimpacto2025.041-005).     
-    
-The difference between the Gompertz and Logistic models is the mechanism of growth reduction. Gompertz assumes that growth rate decreases linearly with the log of the volume.  
-This mechanism shows the biological reality that growth stagnates and decelerates when resources become limited.  
+The Gompertz model was originally made to predict human mortality curves, but turned out to be a very suitable model to predict cancer growth, as it seems to provide the best predictions for e.g. breast and lung cancer growth [(Murphy et al., 2016)](https://doi.org/10.1186/s12885-016-2164-x). This model takes into account growth velocity, or the change of weight/height over time, which is useful for monitoring growth [(Zanotti & Faria, 2025)](https://doi.org/10.56238/edimpacto2025.041-005).     
+
+The difference between the Gompertz and Logistic models is the mechanism of growth reduction. Gompertz assumes that the growth rate decreases linearly with the log of the volume. This mechanism shows the biological reality that growth stagnates and decelerates when resources become limited.  
   
 **The mathematical formula**  
   
@@ -426,15 +377,11 @@ The slope created can be seen in Figure 6:
   
 ![gompert.png](Img%2Fgompert.png)  
   
-_Figure 6: The gompertz model_  
-  
-**Model evaluation**  
-  
-Widely used model in oncology  Bindhammer, M. (n.d.) so tried and tested. Also complex and hard to solve mathematically so could be difficult for beginners.  
+_Figure 6: The Gompertz model_  
   
 ---  
 ### Logistic Growth   
-The exponential growth model has some limitations in predicting the long-term growth rate of cancer cell proliferation ([Tabassum et al., 2019](https://doi.org/10.1088/1742-6596/1366/1/012018)). For this reason the logistic model was introduced. It better explains the behavior of cancer in a later stage.
+The exponential growth model has some limitations in predicting the long-term growth rate of cancer cell proliferation ([Tabassum et al., 2019](https://doi.org/10.1088/1742-6596/1366/1/012018)). For this reason, the logistic model was introduced. It better explains the behavior of cancer in a later stage.
 
 **The mathematical formula**  
   
@@ -451,22 +398,17 @@ _Figure 7: Logistic growth model_
 
 ---
 ### Montroll growth model    
-A model that says tumors can grow quickly when there are nutrients, space, and blood vessels, but the growth will slow when these resources become scarce (Rodrigues, 2024)(Goel et al., 1971).  
-It will look like a log function, because the growth will quickly rise and then level out.   
+A model that states tumors can grow quickly when there are plenty of nutrients, space, and blood vessels, but the growth will slow when these resources become scarce ([Rodrigues, 2024](https://doi.org/10.3390/math12081195)). It will look like a log function, because the growth will quickly rise and then level out.   
   
-  
+
 **The mathematical formula**   
-$$\frac{dV}{dt} = c \cdot V \cdot \left({V^d_{\text{max}} - V ^ d}\right)$$  
-  
+$$\frac{dV}{dt} = c \cdot V \cdot \left({V^d_{\text{max}} - V ^ d}\right)$$
 Where:  
 - $V$ = Current volume  
 - $t$ = time  
 - $c$ = growth rate  
 - $d$ = The braking factor that implements cell death  
-- $\left({V^d_{\text{max}} - V ^ d}\right)$ = remaining capacity of the growth rate,   
-early stage $V$ is very small meaning high growth rate, later stage V approaches $V_{max}$ the growth rate slows down,  
-V =  $V_{max}$ and the growth rate turns to 0 because the maximum stable size was reached.  
-  
+- $\left({V^d_{\text{max}} - V ^ d}\right)$ = remaining capacity of the growth rate, early stage $V$ is very small meaning high growth rate, later stage V approaches $V_{max}$ the growth rate slows down, V =  $V_{max}$ and the growth rate turns to 0 because the maximum stable size was reached.  
   
 The graph will look like this:  
   
@@ -476,12 +418,11 @@ _Figure 8: Montroll growth model_
   
 **Model evaluation**  
   
-This model allows d to vary, therefore it encompasses the standard logistic and Gompetrz models. Doing this is can accurately model the growth of tumors that don't follow a perfect symmetric or early deceleration pattern. The model is quite complex however and would need some proper research to be understandable and applied correctly.  
+This model allows d to vary, therefore it encompasses the standard logistic and Gompertz models. Doing this can accurately model the growth of tumors that don't follow a perfectly symmetric or early deceleration pattern. The model is quite complex, however, and would need some proper research to be understandable and applied correctly.  
   
 ---  
 ### Allee Effect  
-Models in tumor growth often assume exponential growth kinetics at low cell population. In recent pre & clinical observations of tumor initiation or recurrence indicate the presence of tumor growth kinetics in which growth rates scale positively with cell numbers.  
-Recent observations however suggest a cooperative growth pattern also known as the allee effect. Here growth rates increase with cell numbers at low densities (Johnson et al., 2019).  
+Models in tumor growth often assume exponential growth kinetics at low cell populations. In recent (pre-) clinical observations of tumor initiation or recurrence indicate the presence of tumor growth kinetics in which growth rates scale positively with cell numbers. Recent observations however, suggest a cooperative growth pattern also known as the Allee effect. Here, growth rates increase with cell numbers at low densities ([Johnson et al., 2019](https://doi.org/10.1371/journal.pbio.3000399)).
   
 **The mathematical formula**  
   
@@ -489,9 +430,9 @@ $$\frac{dV}{dt} = c \cdot (V - V_{min}) \cdot (V_{max} - V)$$
   
 Where:  
   
-- V = current tumor volume  
+- $V$ = current tumor volume  
 - $V_{min}$ = Allee Threshold (the minimum required amount of cells for the tumor to grow)  
-- $V_{max}$ = The maximum tumor volume also known as carrying capacity  
+- $V_{max}$ = The maximum tumor volume, also known as carrying capacity  
 - $c$ = growth rate.  
   
 This will result in a graph like in Figure 9  
@@ -509,7 +450,7 @@ This model is highly realistic for the initial growth phases, and it's implement
   
   
 ### Surface limited growth model  
-This model states that when an essential nutrient of any kind gets limited, the growth rate of an individual cell will be proportional to its surface area rather than to its volume. The decrease in dimensionality from volume to surface is expected to favor the smaller cells. The model deals with cell growth under unusual nutritional conditions, and the predictions on how cell replication cycle is assumed to behave when there is unusual nutritional conditions (Grover, 1988).   
+This model states that when an essential nutrient of any kind gets limited, the growth rate of an individual cell will be proportional to its surface area rather than to its volume. The decrease in dimensionality from volume to surface is expected to favor the smaller cells. The model deals with cell growth under unusual nutritional conditions, and the predictions on how cell replication cycle is assumed to behave when there is unusual nutritional conditions ([Grover, 1988](https://doi.org/10.1016/s0022-5193(88)80303-5)).   
   
 **The mathematical formula**  
   
@@ -518,8 +459,8 @@ Where:
 - $c$ = growth rate.  
 - $V$ = current cell volume.  
 - $\frac{V}{(V + d)^{1/3}}$ = the effective cell surface that is available for tumor growth.  
-- $d$ = A baseline constant - vragen aan dave  
-  
+- $d$ = A baseline constant  
+
   
 ![surfacelim.png](Img%2Fsurfacelim.png)  
   
@@ -533,7 +474,6 @@ across the cell surface. The down side is that it assumes that only surface is a
 ### Authors    
 
 ---  
-
 - [Yamila Timmer](https://github.com/YamilaTimmer)  
 - [Jarno Duiker](https://github.com/azzipxonraj)   
   
@@ -541,27 +481,19 @@ across the cell surface. The down side is that it assumes that only surface is a
 - Murphy, H., Jaafari, H., & Dobrovolny, H. M. (2016). Differences in predictions of ODE models of tumor growth: a cautionary example. _BMC Cancer_, _16_(1), 163. https://doi.org/10.1186/s12885-016-2164-x  
 - Tabassum, S., Rosli, N. B., & Binti Mazalan, M. S. A. (2019). Mathematical Modeling of Cancer Growth Process: A Review. *Journal of Physics: Conference Series, 1366*(1), 012018. https://doi.org/10.1088/1742-6596/1366/1/012018
 - Chan, K., Kao, C., Gordinier, J., & Ganden, K. (2023). Treatment Optimization for Tumor Growth by Ordinary Differential Equations. _Journal Of Student Research_, _12_(4). https://doi.org/10.47611/jsrhs.v12i4.5202  
-- Stanford University. (z.d.). _Minimizing in 3D: Method 3 Hooke-Jeeves_. https://web.stanford.edu/group/sisl/k12/optimization/MO-unit2-pdfs/2.11minimum3D2hooke-jeeves.pdf
+- Stanford University. (n.d.). _Minimizing in 3D: Method 3 Hooke-Jeeves_. https://web.stanford.edu/group/sisl/k12/optimization/MO-unit2-pdfs/2.11minimum3D2hooke-jeeves.pdf
+- Rodrigues, J. A. (2024). Using Physics-Informed Neural Networks (PINNs) for Tumor Cell Growth Modeling. *Mathematics, 12*(8), 1195. https://doi.org/10.3390/math12081195  
+- freeCodeCamp. (2020, 26 januari). _Euler's Method Explained with Examples_.  https://www.freecodecamp.org/news/eulers-method-explained-with-examples/
 - Heesterman, B., Bokhorst, J., De Pont, L., Verbist, B., Bayley, J., Van Der Mey, A., Corssmit, E., Hes, F., Van Benthem, P., & Jansen, J. (2018). Mathematical Models for Tumor Growth and the Reduction of Overtreatment. _Journal Of Neurological Surgery Part B Skull Base_, _80_(01), 072–078. https://doi.org/10.1055/s-0038-1667148  
 - Botmann, N. K. G., & Dobrovolny, H. M. (2025). Assessing the role of model choice in parameter identifiability of cancer treatment efficacy. _Frontiers in Applied Mathematics And Statistics_, _11_. https://doi.org/10.3389/fams.2025.1542617  
 - Zanotti, Y. P., & Faria, H. A. M. (2025). CLASSICAL MATHEMATICAL MODELS OF POPULATION GROWTH FOR PREDICTING CELL CULTURE IN BIOREACTORS. In _Seven Editora eBooks_. https://doi.org/10.56238/edimpacto2025.041-005  
 - Gerlee, P. (2013). The Model Muddle: In Search of Tumor Growth Laws. _Cancer Research_, _73_(8), 2407–2411. https://doi.org/10.1158/0008-5472.can-12-4355  
-- Bindhammer, M. (n.d.). From the Mendelsohn model to the Gompertz and logistic growth law.  
-- Talkington, A., & Durrett, R. (2015). Estimating Tumor Growth Rates In Vivo. Bulletin of Mathematical Biology, 77(10), 1934–1954. https://doi.org/10.1007/s11538-015-0110-8  
-- Johnson, K. E., Howard, G., Mo, W., Strasser, M. K., Lima, E. A. B. F., Huang, S., & Brock, A. (2019). Cancer cell population growth kinetics at low densities deviate from the exponential growth model and suggest an Allee effect. PLoS Biology, 17(8), e3000399. https://doi.org/10.1371/journal.pbio.3000399  
-- Rodrigues, J. A. (2024). Using Physics-Informed Neural Networks (PINNs) for Tumor Cell Growth Modeling. Mathematics, 12(8), 1195. https://doi.org/10.3390/math12081195  
-- Goel, N. S., Maitra, S. C., & Montroll, E. W. (1971). On the Volterra and Other Nonlinear Models of Interacting Populations. Reviews Of Modern Physics, 43(2), 231–276. https://doi.org/10.1103/revmodphys.43.231  
-- Grover, N. (1988). Surface-limited growth: A model for the synchronization of a growing bacterial culture through periodic starvation. Journal Of Theoretical Biology, 134(1), 77–87. https://doi.org/10.1016/s0022-5193(88)80303-5  
-- Heun’s Method Formula, Derivation & Applications with Solved Examples_. (z.d.). Testbook. https://testbook.com/maths/heuns-method  
-- freeCodeCamp. (2020, 26 januari). _Euler's Method Explained with Examples_. freeCodeCamp.org. https://www.freecodecamp.org/news/eulers-method-explained-with-examples/  
-- Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (z.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order  
-- Brú, A., Albertos, S., Luis Subiza, J., García-Asenjo, J. L., & Brú, I. (2003). The universal dynamics of tumor growth. Biophysical journal, 85(5), 2948–2961. https://doi.org/10.1016/S0006-3495(03)74715-8  
-- Wikipedia contributors. (2025, 27 oktober). Monte Carlo method. Wikipedia. https://en.wikipedia.org/wiki/Monte_Carlo_method  
-- Ibm. (2025, 17 november). Monte Carlo Simulation. IBM. https://www.ibm.com/think/topics/monte-carlo-simulation  
-- GeeksforGeeks. (2025, 12 november). Monte Carlo Tree Search (MCTS) in machine learning. GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/monte-carlo-tree-search-mcts-in-machine-learning/  
+- Bindhammer, M. (2016). From the Mendelsohn model to the Gompertz and logistic growth law. https://cdn.hackaday.io/files/8586367343424/From%20the%20Mendelsohn%20model%20to%20the%20Gompertz%20and%20logistic%20growth%20law.pdf
+- Johnson, K. E., Howard, G., Mo, W., Strasser, M. K., Lima, E. A. B. F., Huang, S., & Brock, A. (2019). Cancer cell population growth kinetics at low densities deviate from the exponential growth model and suggest an Allee effect. *PLoS Biology, 17*(8), e3000399. https://doi.org/10.1371/journal.pbio.3000399
+- Grover, N. (1988). Surface-limited growth: A model for the synchronization of a growing bacterial culture through periodic starvation. *Journal Of Theoretical Biology, 134*(1), 77–87. https://doi.org/10.1016/s0022-5193(88)80303-5
+- Brú, A., Albertos, S., Luis Subiza, J., García-Asenjo, J. L., & Brú, I. (2003). The universal dynamics of tumor growth. *Biophysical journal, 85*(5), 2948–2961. https://doi.org/10.1016/S0006-3495(03)74715-8  
 - GeeksforGeeks. (2025a, juli 23). Bayesian Information Criterion (BIC). GeeksforGeeks. https://www.geeksforgeeks.org/machine-learning/bayesian-information-criterion-bic/
 - GeeksforGeeks. (2025b, juli 23). How to Calculate AIC in R? GeeksforGeeks. https://www.geeksforgeeks.org/r-language/how-to-calculate-aic-in-r/
 - Bevans, R. (2023, June 22). Akaike information criterion | When & how to use it (example). Scribbr. https://www.scribbr.com/statistics/akaike-information-criterion/
-- Wikipedia contributors. (2025b, oktober 27). Monte Carlo method. Wikipedia. https://en.wikipedia.org/wiki/Monte_Carlo_method
-- Monte Carlo method. (2022). In ScienceDirect Topics. Retrieved from https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/monte-carlo-method
-- Basics of the Monte Carlo method - Computational Physics. (z.d.). https://compphys.quantumtinkerer.tudelft.nl/proj2-monte-carlo/
+- Heun’s Method Formula, Derivation & Applications with Solved Examples_. (n.d.). Testbook. https://testbook.com/maths/heuns-method  
+- Runge Kutta 4th Order Method: Introduction, Formula, Algorithm & Example_. (n.d.). Testbook. https://testbook.com/maths/runge-kutta-4th-order  
